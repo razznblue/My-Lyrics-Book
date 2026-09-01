@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="A simple, searchable book of song lyrics.">
+  <title>Kaipo's Lyric Book</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body class="home-mode">
+  <header class="site-header">
+    <div class="header-inner">
+      <a class="brand" href="#songs" aria-label="Lyrics Book home">Kaipo's Lyric Books</a>
+      <div class="header-actions">
+        <button id="converter-button" class="converter-button" type="button" aria-label="Convert lyrics to JSON" title="Convert lyrics to JSON">{ }</button>
+        <button id="random-song" class="random-button" type="button" aria-label="Open a random song" title="Open a random song" data-tooltip="Random song">⤨</button>
+        <button class="print-button" type="button" aria-label="Print the current song">Print</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="app-shell">
+    <section class="intro" aria-labelledby="page-title">
+      <p class="eyebrow">Song collection</p>
+      <h1 id="page-title">Kaipo's Lyric Book</h1>
+      <p class="subtitle">Choose a song to read its lyrics. Filter by genre and sort by name.</p>
+    </section>
+
+    <div class="book-layout">
+      <aside class="contents-panel" aria-labelledby="contents-title">
+        <div class="panel-heading">
+          <h2 id="contents-title">Contents</h2>
+          <span class="song-count" aria-live="polite"></span>
+        </div>
+        <label class="search-label" for="song-search">Search songs</label>
+        <input id="song-search" class="search-input" type="search" placeholder="Search by title" autocomplete="off">
+        <div class="contents-controls">
+          <div>
+            <label class="search-label" for="genre-filter">Genre</label>
+            <select id="genre-filter" class="select-input">
+              <option value="all">All genres</option>
+            </select>
+          </div>
+          <div>
+            <label class="search-label" for="sort-songs">Sort</label>
+            <select id="sort-songs" class="select-input">
+              <option value="az">A to Z</option>
+              <option value="za">Z to A</option>
+              <option value="default">Original order</option>
+            </select>
+          </div>
+        </div>
+        <nav aria-label="Song titles">
+          <ul id="song-list" class="song-list"></ul>
+        </nav>
+        <p id="empty-search" class="empty-message" hidden>No songs match your search.</p>
+      </aside>
+
+      <article id="lyrics-panel" class="lyrics-panel" aria-labelledby="song-title">
+        <div class="lyrics-toolbar">
+          <button id="back-button" class="back-button" type="button" aria-label="Back to contents" title="Back to contents">←</button>
+          <span class="reading-label">Now reading</span>
+          <div class="song-tools" aria-label="Song tools">
+            <label class="chords-toggle" title="Show chords">
+              <input id="show-chords" type="checkbox">
+              <span>Show chords</span>
+            </label>
+            <button id="hear-sample" class="hear-button" type="button" aria-label="Hear a sample" title="Hear a sample">▶ <span>Hear</span></button>
+          </div>
+          <span id="font-status" class="font-status" aria-live="polite"></span>
+        </div>
+        <div id="lyrics-content" class="lyrics-content" aria-live="polite">
+          <p class="loading-message">Loading your songs...</p>
+        </div>
+      </article>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <p>Keep playing and sharing the music with joy</p>
+  </footer>
+
+  <dialog id="converter-dialog" class="converter-dialog" aria-labelledby="converter-title">
+    <div class="dialog-heading">
+      <h2 id="converter-title">Convert to JSON</h2>
+      <button id="close-converter" class="close-button" type="button" aria-label="Close converter" title="Close converter">×</button>
+    </div>
+    <p class="dialog-help">Paste a song below to create an object for <span>songs.json</span>.</p>
+    <label class="converter-label" for="converter-title-input">Song title</label>
+    <input id="converter-title-input" class="search-input" type="text" placeholder="Song title">
+    <label class="converter-label" for="converter-genre-input">Genre</label>
+    <input id="converter-genre-input" class="search-input" type="text" placeholder="e.g. Hawaiian, Folk">
+    <label class="converter-label" for="converter-lyrics-input">Plain lyrics</label>
+    <textarea id="converter-lyrics-input" class="lyrics-input" rows="10" placeholder="Paste lyrics here"></textarea>
+    <label class="converter-label" for="converter-output">JSON object</label>
+    <textarea id="converter-output" class="converter-output" rows="8" readonly aria-label="Generated JSON"></textarea>
+    <div class="dialog-actions">
+      <button id="copy-json" class="action-button" type="button">Copy JSON</button>
+      <button id="download-json" class="action-button primary-action" type="button">Download JSON</button>
+    </div>
+  </dialog>
+
+  <script src="app.js"></script>
+</body>
+</html>
