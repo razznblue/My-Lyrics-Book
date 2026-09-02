@@ -246,6 +246,7 @@ body.reading-mode .lyrics-text.is-overflowing { max-height: none; overflow: visi
   body.reading-mode .lyrics-panel { padding: 16px 18px 24px; }
   body.reading-mode .lyrics-text { max-height: calc(100vh - 80px); }
   body.reading-mode .lyrics-text.is-overflowing { max-height: none; overflow: visible; }
+  body.reading-mode .back-button { display: block; position: fixed; bottom: 24px; right: 24px; width: 48px; height: 48px; font-size: 1.8rem; z-index: 1000; border-radius: 50%; }
   body.reading-mode .lyrics-toolbar { flex-wrap: wrap; }
   body.reading-mode .song-tools { order: 3; width: 100%; margin-left: 0; padding-top: 2px; }
   body.reading-mode .font-status { margin-left: auto; }
