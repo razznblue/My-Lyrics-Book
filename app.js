@@ -15,14 +15,9 @@ const closeConverter = document.querySelector('#close-converter');
 const converterTitle = document.querySelector('#converter-title-input');
 const converterGenre = document.querySelector('#converter-genre-input');
 const converterLyrics = document.querySelector('#converter-lyrics-input');
-const converterChords = document.querySelector('#converter-chords-input');
 const converterOutput = document.querySelector('#converter-output');
 const copyJsonButton = document.querySelector('#copy-json');
 const downloadJsonButton = document.querySelector('#download-json');
-const songAudio = document.querySelector('#song-audio');
-const converterAudio = document.querySelector('#converter-audio-input');
-const showChordsCheckbox = document.querySelector('#show-chords');
-const showAudioCheckbox = document.querySelector('#show-audio');
 
 let songs = [];
 let selectedIndex = 0;
@@ -40,12 +35,6 @@ async function loadSongs() {
     sortSongs.value = savedSort === 'default' ? 'az' : (['az', 'za'].includes(savedSort) ? savedSort : 'az');
     renderContents();
     if (!songs.length) showMessage('No songs yet. Add a song object to songs.json.');
-    
-    // Restore the current song if one was open before refresh
-    const savedSongIndex = localStorage.getItem('lyrics-book-current-song');
-    if (savedSongIndex !== null && parseInt(savedSongIndex) < songs.length) {
-      showSong(parseInt(savedSongIndex));
-    }
   } catch (error) {
     showMessage('Songs could not be loaded. Open this folder through a local web server if your browser blocks local JSON files.', true);
     console.error(error);
@@ -105,45 +94,16 @@ function showSong(index) {
   const song = songs[index];
   if (!song) return;
   selectedIndex = index;
-  localStorage.setItem('lyrics-book-current-song', index);
   document.body.classList.remove('home-mode');
   lyricsContent.replaceChildren();
 
   const title = document.createElement('h2');
   title.id = 'song-title';
   title.textContent = song.title;
-  
-  lyricsContent.append(title);
-
-  // Load audio if available and append to content
-  if (song.audio) {
-    songAudio.src = song.audio;
-    songAudio.style.display = 'none';
-    showAudioCheckbox.disabled = false;
-    showAudioCheckbox.checked = false;
-  } else {
-    songAudio.src = '';
-    songAudio.style.display = 'none';
-    showAudioCheckbox.disabled = true;
-    showAudioCheckbox.checked = false;
-  }
-  lyricsContent.append(songAudio);
-  
   const lyrics = document.createElement('p');
   lyrics.className = 'lyrics-text';
   lyrics.textContent = song.lyrics;
-  lyrics.dataset.lyrics = song.lyrics;
-  lyrics.dataset.chords = song.chords || '';
-  
-  lyricsContent.append(lyrics);
-  
-  // Reset and manage chords toggle
-  showChordsCheckbox.checked = false;
-  if (song.chords) {
-    showChordsCheckbox.disabled = false;
-  } else {
-    showChordsCheckbox.disabled = true;
-  }
+  lyricsContent.append(title, lyrics);
 
   renderContents();
   document.body.classList.add('reading-mode');
@@ -151,31 +111,16 @@ function showSong(index) {
 }
 
 function showContents() {
-  songAudio.pause();
-  songAudio.currentTime = 0;
-  localStorage.removeItem('lyrics-book-current-song');
   document.body.classList.remove('reading-mode');
   document.body.classList.add('home-mode');
 }
 
 function updateJsonOutput() {
-  const output = {
+  converterOutput.value = JSON.stringify({
     title: converterTitle.value.trim(),
     genre: converterGenre.value.trim(),
     lyrics: converterLyrics.value
-  };
-  
-  // Only include audio if provided
-  if (converterAudio.value.trim()) {
-    output.audio = converterAudio.value.trim();
-  }
-  
-  // Only include chords if provided
-  if (converterChords.value.trim()) {
-    output.chords = converterChords.value;
-  }
-  
-  converterOutput.value = JSON.stringify(output, null, 2);
+  }, null, 2);
 }
 
 function openConverter() {
@@ -247,31 +192,9 @@ converterDialog.addEventListener('click', (event) => {
 converterTitle.addEventListener('input', updateJsonOutput);
 converterGenre.addEventListener('input', updateJsonOutput);
 converterLyrics.addEventListener('input', updateJsonOutput);
-converterChords.addEventListener('input', updateJsonOutput);
-converterAudio.addEventListener('input', updateJsonOutput);
 copyJsonButton.addEventListener('click', copyJson);
 downloadJsonButton.addEventListener('click', downloadJson);
 backButton.addEventListener('click', showContents);
-showChordsCheckbox.addEventListener('change', () => {
-  const lyrics = document.querySelector('.lyrics-text');
-  if (!lyrics) return;
-  
-  if (showChordsCheckbox.checked && lyrics.dataset.chords) {
-    lyrics.textContent = lyrics.dataset.chords;
-    lyrics.classList.add('showing-chords');
-  } else {
-    lyrics.textContent = lyrics.dataset.lyrics;
-    lyrics.classList.remove('showing-chords');
-  }
-  fitLyrics(lyrics);
-});
-showAudioCheckbox.addEventListener('change', () => {
-  if (showAudioCheckbox.checked && songAudio.src) {
-    songAudio.style.display = 'block';
-  } else {
-    songAudio.style.display = 'none';
-  }
-});
 document.addEventListener('keydown', (event) => {
   if (event.key === 'Escape' && document.body.classList.contains('reading-mode')) showContents();
 });

@@ -58,24 +58,20 @@
 
       <article id="lyrics-panel" class="lyrics-panel" aria-labelledby="song-title">
         <div class="lyrics-toolbar">
-          <button id="back-button" class="back-button" type="button" aria-label="Back to contents" title="Back to contents">&lt;</button>
+          <button id="back-button" class="back-button" type="button" aria-label="Back to contents" title="Back to contents">←</button>
           <span class="reading-label">Now reading</span>
           <div class="song-tools" aria-label="Song tools">
             <label class="chords-toggle" title="Show chords">
               <input id="show-chords" type="checkbox">
               <span>Show chords</span>
             </label>
-            <label class="audio-toggle" title="Show audio player">
-              <input id="show-audio" type="checkbox" checked>
-              <span>Audio</span>
-            </label>
+            <button id="hear-sample" class="hear-button" type="button" aria-label="Hear a sample" title="Hear a sample">▶ <span>Hear</span></button>
           </div>
           <span id="font-status" class="font-status" aria-live="polite"></span>
         </div>
         <div id="lyrics-content" class="lyrics-content" aria-live="polite">
           <p class="loading-message">Loading your songs...</p>
         </div>
-        <audio id="song-audio" class="song-audio" controls></audio>
       </article>
     </div>
   </main>
@@ -94,12 +90,8 @@
     <input id="converter-title-input" class="search-input" type="text" placeholder="Song title">
     <label class="converter-label" for="converter-genre-input">Genre</label>
     <input id="converter-genre-input" class="search-input" type="text" placeholder="e.g. Hawaiian, Folk">
-    <label class="converter-label" for="converter-audio-input">Audio file (optional)</label>
-    <input id="converter-audio-input" class="search-input" type="text" placeholder="e.g. audio/dream-girl.mp3">
     <label class="converter-label" for="converter-lyrics-input">Plain lyrics</label>
     <textarea id="converter-lyrics-input" class="lyrics-input" rows="10" placeholder="Paste lyrics here"></textarea>
-    <label class="converter-label" for="converter-chords-input">Chords (optional)</label>
-    <textarea id="converter-chords-input" class="lyrics-input" rows="10" placeholder="Paste chords here (same format as lyrics)"></textarea>
     <label class="converter-label" for="converter-output">JSON object</label>
     <textarea id="converter-output" class="converter-output" rows="8" readonly aria-label="Generated JSON"></textarea>
     <div class="dialog-actions">
