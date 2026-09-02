@@ -18,6 +18,9 @@ const converterLyrics = document.querySelector('#converter-lyrics-input');
 const converterOutput = document.querySelector('#converter-output');
 const copyJsonButton = document.querySelector('#copy-json');
 const downloadJsonButton = document.querySelector('#download-json');
+const songAudio = document.querySelector('#song-audio');
+const hearButton = document.querySelector('#hear-sample');
+const converterAudio = document.querySelector('#converter-audio-input');
 
 let songs = [];
 let selectedIndex = 0;
@@ -112,23 +115,41 @@ function showSong(index) {
   lyrics.textContent = song.lyrics;
   lyricsContent.append(title, lyrics);
 
+  // Load audio if available
+  if (song.audio) {
+    songAudio.src = song.audio;
+    songAudio.style.display = 'block';
+  } else {
+    songAudio.src = '';
+    songAudio.style.display = 'none';
+  }
+
   renderContents();
   document.body.classList.add('reading-mode');
   fitLyrics(lyrics);
 }
 
 function showContents() {
+  songAudio.pause();
+  songAudio.currentTime = 0;
   localStorage.removeItem('lyrics-book-current-song');
   document.body.classList.remove('reading-mode');
   document.body.classList.add('home-mode');
 }
 
 function updateJsonOutput() {
-  converterOutput.value = JSON.stringify({
+  const output = {
     title: converterTitle.value.trim(),
     genre: converterGenre.value.trim(),
     lyrics: converterLyrics.value
-  }, null, 2);
+  };
+  
+  // Only include audio if provided
+  if (converterAudio.value.trim()) {
+    output.audio = converterAudio.value.trim();
+  }
+  
+  converterOutput.value = JSON.stringify(output, null, 2);
 }
 
 function openConverter() {
@@ -200,6 +221,7 @@ converterDialog.addEventListener('click', (event) => {
 converterTitle.addEventListener('input', updateJsonOutput);
 converterGenre.addEventListener('input', updateJsonOutput);
 converterLyrics.addEventListener('input', updateJsonOutput);
+converterAudio.addEventListener('input', updateJsonOutput);
 copyJsonButton.addEventListener('click', copyJson);
 downloadJsonButton.addEventListener('click', downloadJson);
 backButton.addEventListener('click', showContents);

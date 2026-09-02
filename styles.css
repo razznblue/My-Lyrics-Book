@@ -153,9 +153,15 @@ h2 { margin-bottom: 0; font-size: 1.25rem; font-weight: normal; }
 
 .lyrics-content { min-height: 400px; padding-top: 30px; overflow-wrap: break-word; }
 
+.song-audio { width: 100%; margin-top: 24px; margin-bottom: 24px; }
+
 .lyrics-content h2 { margin-bottom: 26px; font-size: 2.15rem; line-height: 1.05; }
 
 .lyrics-text { max-height: calc(100vh - 215px); margin: 0; overflow-y: auto; white-space: pre-line; font-family: Georgia, 'Times New Roman', serif; line-height: 1.35; }
+
+.song-audio { width: 100%; margin: 20px 0; padding: 8px; border: 1px solid var(--line); border-radius: 3px; background: var(--wash); }
+
+.song-audio::-webkit-media-controls-panel { background-color: var(--wash); }
 
 .lyrics-text.is-overflowing { max-height: calc((100vh - 215px) * 2); padding-right: 10px; }
 
