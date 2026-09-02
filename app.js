@@ -20,9 +20,9 @@ const converterOutput = document.querySelector('#converter-output');
 const copyJsonButton = document.querySelector('#copy-json');
 const downloadJsonButton = document.querySelector('#download-json');
 const songAudio = document.querySelector('#song-audio');
-const hearButton = document.querySelector('#hear-sample');
 const converterAudio = document.querySelector('#converter-audio-input');
 const showChordsCheckbox = document.querySelector('#show-chords');
+const showAudioCheckbox = document.querySelector('#show-audio');
 
 let songs = [];
 let selectedIndex = 0;
@@ -113,25 +113,37 @@ function showSong(index) {
   title.id = 'song-title';
   title.textContent = song.title;
   
+  lyricsContent.append(title);
+
+  // Load audio if available and append to content
+  if (song.audio) {
+    songAudio.src = song.audio;
+    songAudio.style.display = 'none';
+    showAudioCheckbox.disabled = false;
+    showAudioCheckbox.checked = false;
+  } else {
+    songAudio.src = '';
+    songAudio.style.display = 'none';
+    showAudioCheckbox.disabled = true;
+    showAudioCheckbox.checked = false;
+  }
+  lyricsContent.append(songAudio);
+  
   const lyrics = document.createElement('p');
   lyrics.className = 'lyrics-text';
   lyrics.textContent = song.lyrics;
   lyrics.dataset.lyrics = song.lyrics;
   lyrics.dataset.chords = song.chords || '';
   
-  lyricsContent.append(title, lyrics);
-
-  // Load audio if available
-  if (song.audio) {
-    songAudio.src = song.audio;
-    songAudio.style.display = 'block';
-  } else {
-    songAudio.src = '';
-    songAudio.style.display = 'none';
-  }
+  lyricsContent.append(lyrics);
   
-  // Reset chords toggle to off when opening a new song
+  // Reset and manage chords toggle
   showChordsCheckbox.checked = false;
+  if (song.chords) {
+    showChordsCheckbox.disabled = false;
+  } else {
+    showChordsCheckbox.disabled = true;
+  }
 
   renderContents();
   document.body.classList.add('reading-mode');
@@ -252,6 +264,13 @@ showChordsCheckbox.addEventListener('change', () => {
     lyrics.classList.remove('showing-chords');
   }
   fitLyrics(lyrics);
+});
+showAudioCheckbox.addEventListener('change', () => {
+  if (showAudioCheckbox.checked && songAudio.src) {
+    songAudio.style.display = 'block';
+  } else {
+    songAudio.style.display = 'none';
+  }
 });
 document.addEventListener('keydown', (event) => {
   if (event.key === 'Escape' && document.body.classList.contains('reading-mode')) showContents();

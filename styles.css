@@ -147,13 +147,21 @@ h2 { margin-bottom: 0; font-size: 1.25rem; font-weight: normal; }
 
 .chords-toggle input { width: 15px; height: 15px; accent-color: var(--accent); }
 
-.hear-button { padding: 7px 10px; border: 1px solid var(--line); border-radius: 3px; color: var(--accent); background: var(--paper); font-family: 'Trebuchet MS', sans-serif; font-size: .75rem; cursor: pointer; }
+.chords-toggle:has(input:disabled) { opacity: 0.5; cursor: not-allowed; }
 
-.hear-button:hover, .hear-button:focus-visible { border-color: var(--accent); background: var(--accent-light); outline: none; }
+.chords-toggle input:disabled { cursor: not-allowed; }
 
-.lyrics-content { min-height: 400px; padding-top: 30px; overflow-wrap: break-word; }
+.audio-toggle { display: flex; align-items: center; gap: 6px; color: var(--muted); font-family: 'Trebuchet MS', sans-serif; font-size: .75rem; white-space: nowrap; cursor: pointer; }
 
-.song-audio { width: 100%; margin-top: 24px; margin-bottom: 24px; }
+.audio-toggle input { width: 15px; height: 15px; accent-color: var(--accent); }
+
+.audio-toggle:has(input:disabled) { opacity: 0.5; cursor: not-allowed; }
+
+.audio-toggle input:disabled { cursor: not-allowed; }
+
+.lyrics-content { min-height: 400px; padding-top: 20px; overflow-wrap: break-word; }
+
+.song-audio { display: block; width: 100%; margin: 0 0 22px 0; padding: 10px 12px; border: 1px solid var(--line); border-radius: 4px; background: var(--accent-light); }
 
 .lyrics-content h2 { margin-bottom: 26px; font-size: 2.15rem; line-height: 1.05; }
 
@@ -161,7 +169,7 @@ h2 { margin-bottom: 0; font-size: 1.25rem; font-weight: normal; }
 
 .lyrics-text.showing-chords { font-family: monospace; font-size: 0.95em; color: var(--accent); letter-spacing: 0.02em; }
 
-.song-audio::-webkit-media-controls-panel { background-color: var(--wash); }
+.song-audio::-webkit-media-controls-panel { background-color: transparent; }
 
 .lyrics-text.is-overflowing { max-height: calc((100vh - 215px) * 2); padding-right: 10px; }
 
@@ -247,6 +255,7 @@ body.reading-mode .lyrics-text.is-overflowing { max-height: none; overflow: visi
   .song-list { max-height: 55vh; }
   .lyrics-panel { min-height: 60vh; padding-left: 20px; padding-right: 20px; }
   .lyrics-content h2 { font-size: 1.8rem; }
+  .song-audio { margin-bottom: 18px; padding: 8px 10px; }
   .lyrics-text { max-height: calc(100vh - 150px); }
   .lyrics-text.is-overflowing { max-height: calc((100vh - 150px) * 2); }
   body.reading-mode .lyrics-panel { padding: 16px 18px 24px; }
