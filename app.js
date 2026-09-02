@@ -35,6 +35,12 @@ async function loadSongs() {
     sortSongs.value = savedSort === 'default' ? 'az' : (['az', 'za'].includes(savedSort) ? savedSort : 'az');
     renderContents();
     if (!songs.length) showMessage('No songs yet. Add a song object to songs.json.');
+    
+    // Restore the current song if one was open before refresh
+    const savedSongIndex = localStorage.getItem('lyrics-book-current-song');
+    if (savedSongIndex !== null && parseInt(savedSongIndex) < songs.length) {
+      showSong(parseInt(savedSongIndex));
+    }
   } catch (error) {
     showMessage('Songs could not be loaded. Open this folder through a local web server if your browser blocks local JSON files.', true);
     console.error(error);
@@ -94,6 +100,7 @@ function showSong(index) {
   const song = songs[index];
   if (!song) return;
   selectedIndex = index;
+  localStorage.setItem('lyrics-book-current-song', index);
   document.body.classList.remove('home-mode');
   lyricsContent.replaceChildren();
 
@@ -111,6 +118,7 @@ function showSong(index) {
 }
 
 function showContents() {
+  localStorage.removeItem('lyrics-book-current-song');
   document.body.classList.remove('reading-mode');
   document.body.classList.add('home-mode');
 }
