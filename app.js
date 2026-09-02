@@ -6,7 +6,6 @@ const sortSongs = document.querySelector('#sort-songs');
 const emptySearch = document.querySelector('#empty-search');
 const songCount = document.querySelector('.song-count');
 const fontStatus = document.querySelector('#font-status');
-const printButton = document.querySelector('.print-button');
 const randomSongButton = document.querySelector('#random-song');
 const backButton = document.querySelector('#back-button');
 const converterButton = document.querySelector('#converter-button');
@@ -237,7 +236,6 @@ sortSongs.addEventListener('change', () => {
   localStorage.setItem('lyrics-book-sort', sortSongs.value);
   renderContents();
 });
-printButton.addEventListener('click', () => window.print());
 randomSongButton.addEventListener('click', openRandomSong);
 converterButton.addEventListener('click', openConverter);
 closeConverter.addEventListener('click', closeConverterDialog);

@@ -49,17 +49,6 @@ button, input { font: inherit; }
   text-decoration: none;
 }
 
-.print-button {
-  padding: 8px 14px;
-  border: 1px solid var(--line);
-  border-radius: 3px;
-  color: var(--ink);
-  background: var(--paper);
-  cursor: pointer;
-}
-
-.print-button:hover, .print-button:focus-visible { border-color: var(--accent); color: var(--accent); }
-
 .converter-button { padding: 8px 10px; border: 1px solid var(--line); border-radius: 3px; color: var(--accent); background: var(--paper); font-family: monospace; font-size: .85rem; cursor: pointer; }
 
 .converter-button:hover, .converter-button:focus-visible { border-color: var(--accent); background: var(--accent-light); outline: none; }
