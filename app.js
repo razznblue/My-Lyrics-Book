@@ -27,6 +27,7 @@ let songs = [];
 let selectedIndex = 0;
 const savedGenre = localStorage.getItem('lyrics-book-genre') || 'all';
 const savedSort = localStorage.getItem('lyrics-book-sort') || 'az';
+const contentsScrollKey = 'lyrics-book-contents-scroll';
 
 async function loadSongs() {
   try {
@@ -70,7 +71,10 @@ function renderContents() {
     button.type = 'button';
     button.textContent = song.title;
     button.setAttribute('aria-current', index === selectedIndex ? 'true' : 'false');
-    button.addEventListener('click', () => showSong(index));
+    button.addEventListener('click', () => {
+      saveContentsScroll();
+      showSong(index);
+    });
     item.append(button);
     return item;
   }));
@@ -97,7 +101,17 @@ function openRandomSong() {
   const matches = getMatchingSongs();
   if (!matches.length) return;
   const randomMatch = matches[Math.floor(Math.random() * matches.length)];
+  saveContentsScroll();
   showSong(randomMatch.index);
+}
+
+function saveContentsScroll() {
+  localStorage.setItem(contentsScrollKey, String(songList.scrollTop));
+}
+
+function restoreContentsScroll() {
+  const savedScroll = localStorage.getItem(contentsScrollKey);
+  if (savedScroll !== null) songList.scrollTop = parseInt(savedScroll, 10) || 0;
 }
 
 function showSong(index) {
@@ -155,6 +169,7 @@ function showContents() {
   localStorage.removeItem('lyrics-book-current-song');
   document.body.classList.remove('reading-mode');
   document.body.classList.add('home-mode');
+  requestAnimationFrame(restoreContentsScroll);
 }
 
 function updateJsonOutput() {
