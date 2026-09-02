@@ -238,13 +238,13 @@ body.reading-mode .lyrics-text.is-overflowing { max-height: none; overflow: visi
   .header-inner, .app-shell { padding-left: 18px; padding-right: 18px; }
   .app-shell { padding-top: 36px; }
   .book-layout { grid-template-columns: 1fr; gap: 18px; }
-  .song-list { max-height: 220px; }
+  .song-list { max-height: 55vh; }
   .lyrics-panel { min-height: 60vh; padding-left: 20px; padding-right: 20px; }
   .lyrics-content h2 { font-size: 1.8rem; }
-  .lyrics-text { max-height: calc(100vh - 250px); }
-  .lyrics-text.is-overflowing { max-height: calc((100vh - 250px) * 2); }
+  .lyrics-text { max-height: calc(100vh - 150px); }
+  .lyrics-text.is-overflowing { max-height: calc((100vh - 150px) * 2); }
   body.reading-mode .lyrics-panel { padding: 16px 18px 24px; }
-  body.reading-mode .lyrics-text { max-height: calc(100vh - 145px); }
+  body.reading-mode .lyrics-text { max-height: calc(100vh - 80px); }
   body.reading-mode .lyrics-text.is-overflowing { max-height: none; overflow: visible; }
   body.reading-mode .lyrics-toolbar { flex-wrap: wrap; }
   body.reading-mode .song-tools { order: 3; width: 100%; margin-left: 0; padding-top: 2px; }
