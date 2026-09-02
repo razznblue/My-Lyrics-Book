@@ -159,7 +159,7 @@ h2 { margin-bottom: 0; font-size: 1.25rem; font-weight: normal; }
 
 .lyrics-text { max-height: calc(100vh - 215px); margin: 0; overflow-y: auto; white-space: pre-line; font-family: Georgia, 'Times New Roman', serif; line-height: 1.35; }
 
-.song-audio { width: 100%; margin: 20px 0; padding: 8px; border: 1px solid var(--line); border-radius: 3px; background: var(--wash); }
+.lyrics-text.showing-chords { font-family: monospace; font-size: 0.95em; color: var(--accent); letter-spacing: 0.02em; }
 
 .song-audio::-webkit-media-controls-panel { background-color: var(--wash); }
 
