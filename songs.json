@@ -590,7 +590,8 @@
   {
     "title": "Maunaloa",
     "genre": "Hawaiian",
-    "lyrics": "ʻAuhea wale ʻoe e Maunaloa lā\nKīkala nui\nHoʻi hoʻi mai ʻoe i kuʻu aloha lā\nĒ, ē, ē, Kaʻawaloa nei\n\nUa hiki nō ʻoe a e hele ana lā\nMe ka ipo manuahi\nA naʻu nō ia honi hoʻokahi lā\nĒ, ē, ē, kahi pela aʻo kāua\n\nKū hinakā popopo lā\nʻAi ʻia e ka ʻelelū\nA naʻu nō ia ē kāwele nei lā\nĒ, ē, ē, Kō kāmaʻa miomio\n\nHaʻina ʻia mai ana ka puana lā\nKū ʻoe a hele pēlā\nA naʻu nō ia honi hoʻokahi lā\nĒ, ē, ē, kahi pela aʻo kāua"
+    "lyrics": "ʻAuhea wale ʻoe e Maunaloa lā\nKīkala nui\nHoʻi hoʻi mai ʻoe i kuʻu aloha lā\nĒ, ē, ē, Kaʻawaloa nei\n\nUa hiki nō ʻoe a e hele ana lā\nMe ka ipo manuahi\nA naʻu nō ia honi hoʻokahi lā\nĒ, ē, ē, kahi pela aʻo kāua\n\nKū hinakā popopo lā\nʻAi ʻia e ka ʻelelū\nA naʻu nō ia ē kāwele nei lā\nĒ, ē, ē, Kō kāmaʻa miomio\n\nHaʻina ʻia mai ana ka puana lā\nKū ʻoe a hele pēlā\nA naʻu nō ia honi hoʻokahi lā\nĒ, ē, ē, kahi pela aʻo kāua",
+    "audio": "audio/maunaloa.m4a"
   },
   {
     "title": "Mele 'Ohana",
@@ -912,7 +913,8 @@
   {
     "title": "Welina O'ahu",
     "genre": "Hawaiian",
-    "lyrics": "Welina Oʻahu me ka lei ʻilima\nUa lihi ʻalani ka heke o nā pua\n\nAia lā ka pua kenikeni\nE māpu mai ana no Koʻolaupoko\n\nHoloholo ma ke ala o Maunaloa\nUluwehi nā pua sweet tubarose\n\nKuʻi ana ka lāʻau i ke kōnane\nʻAuwē hiki nō, inu ke ʻala pīkake\n\nI luna kaulana o Puʻōwaina\nMelia mau loa ka waihoʻoluʻu\n\nI kēia ahiahi i haku mai ai\nʻO ʻoe kaʻu i hāʻupu aʻe nei"
+    "lyrics": "Welina Oʻahu me ka lei ʻilima\nUa lihi ʻalani ka heke o nā pua\n\nAia lā ka pua kenikeni\nE māpu mai ana no Koʻolaupoko\n\nHoloholo ma ke ala o Maunaloa\nUluwehi nā pua sweet tubarose\n\nKuʻi ana ka lāʻau i ke kōnane\nʻAuwē hiki nō, inu ke ʻala pīkake\n\nI luna kaulana o Puʻōwaina\nMelia mau loa ka waihoʻoluʻu\n\nI kēia ahiahi i haku mai ai\nʻO ʻoe kaʻu i hāʻupu aʻe nei",
+    "audio": "audio/welina-oahu.m4a"
   },
   {
     "title": "What She Really Needs",
