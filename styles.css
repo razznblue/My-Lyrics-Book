@@ -156,7 +156,16 @@ h2 { margin-bottom: 0; font-size: 1.25rem; font-weight: normal; }
 
 .lyrics-text { max-height: calc(100vh - 215px); margin: 0; overflow-y: auto; white-space: pre-line; font-family: Georgia, 'Times New Roman', serif; line-height: 1.35; }
 
-.lyrics-text.showing-chords { font-family: monospace; font-size: 0.95em; color: var(--accent); letter-spacing: 0.02em; }
+.lyrics-text.showing-chords {
+  overflow-x: hidden;
+  white-space: pre;
+  font-family: monospace;
+  font-size: 0.95em;
+  color: var(--accent);
+  letter-spacing: 0.02em;
+}
+
+.chord-lines { display: block; width: max-content; }
 
 .lyrics-text.is-overflowing { max-height: calc((100vh - 215px) * 2); padding-right: 10px; }
 
@@ -185,6 +194,8 @@ h2 { margin-bottom: 0; font-size: 1.25rem; font-weight: normal; }
 .converter-label { display: block; margin: 14px 0 7px; color: var(--muted); font-family: 'Trebuchet MS', sans-serif; font-size: .72rem; font-weight: bold; letter-spacing: .04em; text-transform: uppercase; }
 
 .lyrics-input, .converter-output { display: block; width: 100%; resize: vertical; padding: 10px 11px; border: 1px solid var(--line); border-radius: 2px; color: var(--ink); background: var(--wash); font-family: Georgia, 'Times New Roman', serif; line-height: 1.45; outline: none; }
+
+#converter-chords-input { overflow-wrap: anywhere; white-space: pre-wrap; font-family: monospace; }
 
 .lyrics-input:focus, .converter-output:focus { border-color: var(--accent); box-shadow: 0 0 0 2px var(--accent-light); }
 
@@ -255,6 +266,11 @@ body.reading-mode .lyrics-text.is-overflowing { max-height: none; overflow: visi
   .converter-dialog { padding: 20px; }
   .dialog-actions { flex-direction: column-reverse; }
   .action-button { width: 100%; }
+}
+
+.lyrics-text.showing-chords.is-overflowing {
+  overflow-x: hidden;
+  overflow-y: auto;
 }
 
 @media print {

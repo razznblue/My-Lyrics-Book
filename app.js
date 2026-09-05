@@ -221,13 +221,24 @@ function downloadJson() {
 }
 
 function fitLyrics(lyrics) {
+  const isChordMode = lyrics.classList.contains('showing-chords');
   const minimumSize = 14;
   const maximumSize = 48;
   const availableHeight = Math.max(180, window.innerHeight - lyrics.getBoundingClientRect().top - 28);
   lyrics.style.fontSize = `${maximumSize}px`;
+  const chordLines = lyrics.querySelector('.chord-lines');
+  if (chordLines) chordLines.style.wordSpacing = '0px';
 
   while (lyrics.scrollHeight > availableHeight && parseFloat(getComputedStyle(lyrics).fontSize) > minimumSize) {
     lyrics.style.fontSize = `${parseFloat(getComputedStyle(lyrics).fontSize) - 1}px`;
+  }
+
+  if (isChordMode && lyrics.scrollWidth > lyrics.clientWidth) {
+    let wordSpacing = 0;
+    while (chordLines.scrollWidth > lyrics.clientWidth && wordSpacing > -10) {
+      wordSpacing -= 0.5;
+      chordLines.style.wordSpacing = `${wordSpacing}px`;
+    }
   }
 
   const isOverflowing = lyrics.scrollHeight > availableHeight;
@@ -270,7 +281,10 @@ showChordsCheckbox.addEventListener('change', () => {
   if (!lyrics) return;
   
   if (showChordsCheckbox.checked && lyrics.dataset.chords) {
-    lyrics.textContent = lyrics.dataset.chords;
+    const chordLines = document.createElement('span');
+    chordLines.className = 'chord-lines';
+    chordLines.textContent = lyrics.dataset.chords;
+    lyrics.replaceChildren(chordLines);
     lyrics.classList.add('showing-chords');
   } else {
     lyrics.textContent = lyrics.dataset.lyrics;
