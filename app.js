@@ -21,10 +21,15 @@ const copyJsonButton = document.querySelector('#copy-json');
 const downloadJsonButton = document.querySelector('#download-json');
 const songAudio = document.querySelector('#song-audio');
 const showChordsCheckbox = document.querySelector('#show-chords');
+const transposeControls = document.querySelector('#transpose-controls');
+const transposeDownButton = document.querySelector('#transpose-down');
+const transposeUpButton = document.querySelector('#transpose-up');
+const transposeStatus = document.querySelector('#transpose-status');
 const showAudioCheckbox = document.querySelector('#show-audio');
 
 let songs = [];
 let selectedIndex = 0;
+let transposeSteps = 0;
 const savedGenre = localStorage.getItem('lyrics-book-genre') || 'all';
 const savedSort = localStorage.getItem('lyrics-book-sort') || 'az';
 const contentsScrollKey = 'lyrics-book-contents-scroll';
@@ -151,6 +156,9 @@ function showSong(index) {
   lyricsContent.append(lyrics);
   
   // Reset and manage chords toggle
+  transposeSteps = 0;
+  updateTransposeStatus();
+  transposeControls.hidden = true;
   showChordsCheckbox.checked = false;
   if (song.chords) {
     showChordsCheckbox.disabled = false;
@@ -160,6 +168,60 @@ function showSong(index) {
 
   renderContents();
   document.body.classList.add('reading-mode');
+  fitLyrics(lyrics);
+}
+
+const flatNotes = ['C', 'Db', 'D', 'Eb', 'E', 'F', 'Gb', 'G', 'Ab', 'A', 'Bb', 'B'];
+const noteIndexes = new Map([
+  ['C', 0], ['B#', 0], ['C#', 1], ['Db', 1], ['D', 2], ['D#', 3], ['Eb', 3],
+  ['E', 4], ['Fb', 4], ['E#', 5], ['F', 5], ['F#', 6], ['Gb', 6], ['G', 7],
+  ['G#', 8], ['Ab', 8], ['A', 9], ['A#', 10], ['Bb', 10], ['B', 11], ['Cb', 11]
+]);
+
+function transposeNote(note, steps) {
+  const noteIndex = noteIndexes.get(note);
+  if (noteIndex === undefined) return note;
+  return flatNotes[(noteIndex + steps + 12) % 12];
+}
+
+function transposeChordToken(token, steps) {
+  const rootMatch = token.match(/^([A-G](?:#|b)?)(.*)$/);
+  if (!rootMatch) return token;
+
+  const [, root, remainder] = rootMatch;
+  const bassMatch = remainder.match(/^(.*)\/([A-G](?:#|b)?)$/);
+  const suffix = bassMatch ? bassMatch[1] : remainder;
+  const bass = bassMatch ? `/${transposeNote(bassMatch[2], steps)}` : '';
+  return `${transposeNote(root, steps)}${suffix}${bass}`;
+}
+
+function transposeChordText(chords, steps) {
+  const chordPattern = /\b([A-G](?:#|b)?(?:(?:maj|min|dim|aug|sus|add)?\d*)?(?:\/[A-G](?:#|b)?)?)\b/g;
+
+  return chords.split('\n').map(line => {
+    const matches = [...line.matchAll(chordPattern)];
+    const hasChordShape = matches.length > 1
+      || /^[\sA-Ga-g0-9#b/()+-]+$/.test(line.trim())
+      || matches.some(match => /[#b/]|\d|maj|min|dim|aug|sus|add/.test(match[1]) || /\s{2,}/.test(line.slice(match.index + match[1].length)));
+
+    return hasChordShape ? line.replace(chordPattern, token => transposeChordToken(token, steps)) : line;
+  }).join('\n');
+}
+
+function updateTransposeStatus() {
+  transposeStatus.textContent = transposeSteps === 0
+    ? 'Original key'
+    : `${transposeSteps > 0 ? '+' : ''}${transposeSteps} ${Math.abs(transposeSteps) === 1 ? 'semitone' : 'semitones'}`;
+  transposeDownButton.disabled = transposeSteps <= -12;
+  transposeUpButton.disabled = transposeSteps >= 12;
+}
+
+function renderChordDisplay() {
+  const lyrics = document.querySelector('.lyrics-text');
+  if (!lyrics || !showChordsCheckbox.checked || !lyrics.dataset.chords) return;
+
+  const chordLines = lyrics.querySelector('.chord-lines');
+  if (chordLines) chordLines.textContent = transposeChordText(lyrics.dataset.chords, transposeSteps);
   fitLyrics(lyrics);
 }
 
@@ -265,9 +327,6 @@ sortSongs.addEventListener('change', () => {
 randomSongButton.addEventListener('click', openRandomSong);
 converterButton.addEventListener('click', openConverter);
 closeConverter.addEventListener('click', closeConverterDialog);
-converterDialog.addEventListener('click', (event) => {
-  if (event.target === converterDialog) closeConverterDialog();
-});
 converterTitle.addEventListener('input', updateJsonOutput);
 converterGenre.addEventListener('input', updateJsonOutput);
 converterLyrics.addEventListener('input', updateJsonOutput);
@@ -283,14 +342,28 @@ showChordsCheckbox.addEventListener('change', () => {
   if (showChordsCheckbox.checked && lyrics.dataset.chords) {
     const chordLines = document.createElement('span');
     chordLines.className = 'chord-lines';
-    chordLines.textContent = lyrics.dataset.chords;
+    chordLines.textContent = transposeChordText(lyrics.dataset.chords, transposeSteps);
     lyrics.replaceChildren(chordLines);
     lyrics.classList.add('showing-chords');
+    transposeControls.hidden = false;
   } else {
     lyrics.textContent = lyrics.dataset.lyrics;
     lyrics.classList.remove('showing-chords');
+    transposeControls.hidden = true;
   }
   fitLyrics(lyrics);
+});
+transposeDownButton.addEventListener('click', () => {
+  if (transposeSteps <= -12) return;
+  transposeSteps -= 1;
+  updateTransposeStatus();
+  renderChordDisplay();
+});
+transposeUpButton.addEventListener('click', () => {
+  if (transposeSteps >= 12) return;
+  transposeSteps += 1;
+  updateTransposeStatus();
+  renderChordDisplay();
 });
 showAudioCheckbox.addEventListener('change', () => {
   if (showAudioCheckbox.checked && songAudio.src) {
@@ -300,6 +373,7 @@ showAudioCheckbox.addEventListener('change', () => {
   }
 });
 document.addEventListener('keydown', (event) => {
+  if (converterDialog.open) return;
   if (event.key === 'Escape' && document.body.classList.contains('reading-mode')) showContents();
 });
 window.addEventListener('resize', () => {

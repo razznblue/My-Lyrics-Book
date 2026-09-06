@@ -64,6 +64,11 @@
               <input id="show-chords" type="checkbox">
               <span>Show chords</span>
             </label>
+            <div id="transpose-controls" class="transpose-controls" hidden aria-label="Transpose chords">
+              <button id="transpose-down" class="transpose-button" type="button" aria-label="Transpose down" title="Transpose down">−</button>
+              <span id="transpose-status" aria-live="polite">Original key</span>
+              <button id="transpose-up" class="transpose-button" type="button" aria-label="Transpose up" title="Transpose up">+</button>
+            </div>
             <label class="audio-toggle" title="Show audio player">
               <input id="show-audio" type="checkbox">
               <span>Audio</span>
