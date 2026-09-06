@@ -699,6 +699,7 @@
     "title": "Maunaloa",
     "genre": "Hawaiian",
     "lyrics": "ʻAuhea wale ʻoe e Maunaloa lā\nKīkala nui\nHoʻi hoʻi mai ʻoe i kuʻu aloha lā\nĒ, ē, ē, Kaʻawaloa nei\n\nUa hiki nō ʻoe a e hele ana lā\nMe ka ipo manuahi\nA naʻu nō ia honi hoʻokahi lā\nĒ, ē, ē, kahi pela aʻo kāua\n\nKū hinakā popopo lā\nʻAi ʻia e ka ʻelelū\nA naʻu nō ia ē kāwele nei lā\nĒ, ē, ē, Kō kāmaʻa miomio\n\nHaʻina ʻia mai ana ka puana lā\nKū ʻoe a hele pēlā\nA naʻu nō ia honi hoʻokahi lā\nĒ, ē, ē, kahi pela aʻo kāua",
+    "chords": "C               C7   \nʻAuhea wale ʻoe e Maunaloa lā\nF      C\nKīkala nui\nG7\nHoʻi hoʻi mai ʻoe i kuʻu aloha lā\nG7                F  C\nĒ, ē, ē, Kaʻawaloa nei\n\nC              C7  \nUa hiki nō ʻoe a e hele ana lā\nF           C\nMe ka ipo manuahi\nG7\nA naʻu nō ia honi hoʻokahi lā\nG7                     F  C\nĒ, ē, ē, kahi pela aʻo kāua\n\nC         C7  \nKū hinakā popopo lā\nF             C\nʻAi ʻia e ka ʻelelū\nG7\nA naʻu nō ia ē kāwele nei lā\nG7                   F  C\nĒ, ē, ē, Kō kāmaʻa miomio\n\nC              C7  \nHaʻina ʻia mai ana ka puana lā\nF            C\nKū ʻoe a hele pēlā\nG7\nA naʻu nō ia honi hoʻokahi lā\nG7                     F  C\nĒ, ē, ē, kahi pela aʻo kāua",
     "audio": "audio/maunaloa.m4a"
   },
   {
@@ -1138,6 +1139,7 @@
     "title": "Welina O'ahu",
     "genre": "Hawaiian",
     "lyrics": "Welina Oʻahu me ka lei ʻilima\nUa lihi ʻalani ka heke o nā pua\n\nAia lā ka pua kenikeni\nE māpu mai ana no Koʻolaupoko\n\nHoloholo ma ke ala o Maunaloa\nUluwehi nā pua sweet tubarose\n\nKuʻi ana ka lāʻau i ke kōnane\nʻAuwē hiki nō, inu ke ʻala pīkake\n\nI luna kaulana o Puʻōwaina\nMelia mau loa ka waihoʻoluʻu\n\nI kēia ahiahi i haku mai ai\nʻO ʻoe kaʻu i hāʻupu aʻe nei",
+    "chords": "Vamp:\nA7 D7 G G A7 D7 G D7\n\nG       G7   C     Cm   G   E7\nWelina Oʻahu me ka lei ʻilima\nA7            D7            G\nUa lihi ʻalani ka heke o nā pua\n\nG   G7  C    Cm   G   E7\nAia lā ka pua kenikeni\nA7            D7         G\nE māpu mai ana no Koʻolaupoko\n\nG             G7   C Cm   G  E7\nHoloholo ma ke ala o Maunaloa\nA7            D7         G\nUluwehi nā pua sweet tubarose\n\nG             G7  C  Cm   G  E7\nKuʻi ana ka lāʻau i ke kōnane\nA7             D7            G\nʻAuwē hiki nō, inu ke ʻala pīkake\n\nG      G7     C  Cm   G   E7\nI luna kaulana o Puʻōwaina\nA7           D7         G\nMelia mau loa ka waihoʻoluʻu\n\nG      G7     C    Cm   G   E7\nI kēia ahiahi i haku mai ai\nA7            D7          G\nʻO ʻoe kaʻu i hāʻupu aʻe nei",
     "audio": "audio/welina-oahu.m4a"
   },
   {
