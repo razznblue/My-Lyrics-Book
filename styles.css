@@ -183,9 +183,67 @@ h2 { margin-bottom: 0; font-size: 1.25rem; font-weight: normal; }
 
 .error-message { max-width: 35rem; }
 
-.site-footer { padding: 0 28px 30px; color: var(--muted); text-align: center; font-size: .9rem; }
+.site-footer {
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 26px 28px 34px;
+  border-top: 1px solid var(--line);
+  color: var(--muted);
+  text-align: center;
+  font-size: .9rem;
+  background: linear-gradient(180deg, rgba(255,255,255,0.45), rgba(255,255,255,0.96));
+}
 
-.site-footer p { margin: 0; }
+.site-footer p {
+  margin: 0;
+  line-height: 1.5;
+}
+
+.site-footer > p:first-child {
+  color: var(--ink);
+  font-size: 1.05rem;
+  font-weight: 600;
+}
+
+.site-footer > p:nth-of-type(2) {
+  margin-top: 14px;
+  font-family: 'Trebuchet MS', sans-serif;
+  font-size: .72rem;
+  font-weight: bold;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.site-footer ul {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px 18px;
+  margin: 12px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.site-footer li {
+  display: inline-flex;
+  align-items: center;
+}
+
+.site-footer a {
+  color: var(--accent);
+  text-decoration: none;
+  font-weight: 600;
+  transition: color .15s ease, text-decoration-color .15s ease;
+}
+
+.site-footer a:hover,
+.site-footer a:focus-visible {
+  color: #123f3a;
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+  outline: none;
+}
 
 .converter-dialog { width: min(560px, calc(100% - 32px)); max-height: calc(100vh - 32px); padding: 24px; border: 1px solid var(--line); background: var(--paper); color: var(--ink); box-shadow: 0 18px 60px rgba(32, 36, 38, .2); }
 
