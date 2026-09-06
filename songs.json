@@ -138,13 +138,13 @@
     "title": "E Aloha Mai E Pele",
     "genre": "Hawaiian",
     "lyrics": "E aloha mai, e Pele\nKa wahine lewa i ke ahi\nNuha ʻinoʻino nō ʻoe\nMe kou lava neʻe mālie\n\nKaulana nei kou inoa\nMa nā wahi pū a pau\nHolo mākou me ka waimaka\nMai kuʻu ʻāina aloha\n\nHiʻiakapoliopele\nKāu mea i aloha ai\nE alakai ʻoe a ʻike pono\nKe aliʻi wahine o ka honua\n\nKe hulali nei ke ahi\nMe kou lava neʻe mālie\nHuli aku mākou a i luna\nʻIke i ka nani poina ʻole\n\nHaʻina mai ka puana\nE ō e Pele i kou inoa\nPuʻuwai kaumaha o ka lehulehu\nAloha nō i ka ʻāina",
-    "music": "https://www.youtube.com/watch?v=whlBVXdW7yA"
+    "embed": "<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/whlBVXdW7yA?si=JUFIkQEnvIh_TqzI\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen></iframe>"
   },
   {
     "title": "E Hihiwai",
     "genre": "Hawaiian",
     "lyrics": "Aia i ka nani o Molokaʻi lā\nI nā pali weliweli o ke koʻolau\nHea mai ka leo hone\nI ke ahiahi lā\nI ka makani ʻekepue o ke awāwa\n\nHui:\nE hīhīwai lā lae lae\nE ho'i mai kāua lā\nI ka ʻāina uluwehi o Wailau\nHanohano wale nō\nKa wailele Kahiwa lā\nA me ke kuahiwi ʻo Olokuʻi\n\nMele kākou nei a pau\nI ka mele ʻāina lā\nʻO ka nani mae ʻole o ke ola mau\nʻO ka makani kuʻu leo\nʻO ke kai kuʻu puʻuwai\nʻO ka ʻāina uluwehi kuʻu nui kino",
-    "music": "https://www.youtube.com/watch?v=lUzJ74V8sKM&list=RDlUzJ74V8sKM&start_radio=1"
+    "embed": "<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/lUzJ74V8sKM?si=6vTosOYhpeIH7_qS\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen></iframe>"
   },
   {
     "title": "E Ho'i I Ka Pili",
@@ -154,8 +154,7 @@
   {
     "title": "E Huli Ho'i Mai",
     "genre": "Hawaiian",
-    "lyrics": "I miss you, my darling\nE kuʻu ʻiʻini\nForever I'll be waiting\nE huli hoʻi mai\n\nWhen night falls kuʻu ipo\nMy aching heart keeps calling\nʻAuhea, ʻauhea ʻoe\nE huli hoʻi mai\n\nThe flowers' rare beauty\nKuʻu pua onaona\nThey whisper \"I need you\"\nE huli hoʻi mai\n\nHaʻina ʻia mai\nAna ka puana\nForever I'll be waiting\nE huli hoʻi mai",
-    "music": ""
+    "lyrics": "I miss you, my darling\nE kuʻu ʻiʻini\nForever I'll be waiting\nE huli hoʻi mai\n\nWhen night falls kuʻu ipo\nMy aching heart keeps calling\nʻAuhea, ʻauhea ʻoe\nE huli hoʻi mai\n\nThe flowers' rare beauty\nKuʻu pua onaona\nThey whisper \"I need you\"\nE huli hoʻi mai\n\nHaʻina ʻia mai\nAna ka puana\nForever I'll be waiting\nE huli hoʻi mai"
   },
   {
     "title": "E Huli Mākou",

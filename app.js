@@ -30,6 +30,7 @@ const showAudioCheckbox = document.querySelector('#show-audio');
 let songs = [];
 let selectedIndex = 0;
 let transposeSteps = 0;
+let songEmbed = null;
 const savedGenre = localStorage.getItem('lyrics-book-genre') || 'all';
 const savedSort = localStorage.getItem('lyrics-book-sort') || 'az';
 const contentsScrollKey = 'lyrics-book-contents-scroll';
@@ -133,10 +134,19 @@ function showSong(index) {
   
   lyricsContent.append(title);
 
-  // Load audio if available and append to content
+  songEmbed = null;
   if (song.audio) {
     songAudio.src = song.audio;
     songAudio.style.display = 'none';
+    showAudioCheckbox.disabled = false;
+    showAudioCheckbox.checked = false;
+  } else if (song.embed) {
+    songAudio.src = '';
+    songAudio.style.display = 'none';
+    songEmbed = document.createElement('div');
+    songEmbed.className = 'song-embed';
+    songEmbed.innerHTML = song.embed;
+    songEmbed.hidden = true;
     showAudioCheckbox.disabled = false;
     showAudioCheckbox.checked = false;
   } else {
@@ -146,6 +156,7 @@ function showSong(index) {
     showAudioCheckbox.checked = false;
   }
   lyricsContent.append(songAudio);
+  if (songEmbed) lyricsContent.append(songEmbed);
 
   const lyrics = document.createElement('p');
   lyrics.className = 'lyrics-text';
@@ -366,11 +377,12 @@ transposeUpButton.addEventListener('click', () => {
   renderChordDisplay();
 });
 showAudioCheckbox.addEventListener('change', () => {
-  if (showAudioCheckbox.checked && songAudio.src) {
+  if (showAudioCheckbox.checked && songAudio.getAttribute('src')) {
     songAudio.style.display = 'block';
   } else {
     songAudio.style.display = 'none';
   }
+  if (songEmbed) songEmbed.hidden = !showAudioCheckbox.checked;
 });
 document.addEventListener('keydown', (event) => {
   if (converterDialog.open) return;
