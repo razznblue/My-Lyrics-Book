@@ -30,7 +30,7 @@
   {
     "title": "'Ālika",
     "genre": "Hawaiian",
-    "lyrics": "Aia i ʻĀlika\nKa ihu o ka moku\nUa hao a paʻihi\nNā peʻa i ka makani\n\nAia i ʻĀlika\nKa ihu o ka moku\nUa hao a paʻihi\nNā peʻa i ka makani\n\nKe liolio nei\nKe kaula likini\nʻAluʻalu ʻole iho\nKe kui i ka makani\n\nKe liolio nei\nKe kaula likini\nʻAluʻalu ʻole iho\nKe kui i ka makani\n\nʻAʻole i kau pono\nKa newa i ka piko\nKaʻa ʻē ka huila\nE niniu i ka makani\n\nʻAʻole i kau pono\nKa newa i ka piko\nKaʻa ʻē ka huila\nE niniu i ka makani",
+    "lyrics": "Aia i ʻĀlika\nKa ihu o ka moku\nUa hao a paʻihi\nNā peʻa i ka makani\n\nAia i ʻĀlika\nKa ihu o ka moku\nUa hao a paʻihi\nNā peʻa i ka makani\n\nKe liolio nei\nKe kaula likini\nʻAluʻalu ʻole iho\nKe kui i ka makani\n\nʻAʻole i kau pono\nKa newa i ka piko\nKaʻa ʻē ka huila\nE niniu i ka makani\n\nHaʻina ia mai \nAna ka puana\nAia i ʻĀlika\nKa iho o ka moku",
     "embed": "<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/XJPZUAdSQoc?si=8iwsggOaTqgasmzm\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen></iframe>"
   },
   {
@@ -281,6 +281,11 @@
     "title": "Haleakala Hula",
     "genre": "Hawaiian",
     "lyrics": "Kuahiwi nani ʻoe Haleakalā\nKaulana hoʻi ʻoe kū kilakila\n\nʻO Makawao ia ua kaulana\nI kāohi ia iho o ka lāʻau\n\nHe ʻŪkiu e ka ua o ka ʻāina\nMe ka makani aheahe ʻoluʻolu\n\nE aho no ʻoe a e komo mai\nA e hoʻolaʻi ka malu o ke ao\n\nPuana ka inoa i lohe ʻia\nKuahiwi nani ʻoe Haleakalā"
+  },
+  {
+    "title": "Haleʻiwa Hula",
+    "genre": "Hawaiian",
+    "lyrics": "Hanohano nō Haleʻiwa\nKu`u home aloha\n\nUʻi nō ʻo Puaʻena\nKa ʻehukai hāwanawana\n\nKilakila ʻo Haleʻiwa\nKa hale kipa o nâ malihini\n\nHaʻina ʻia mai ka puana\nHanohano ʻo Haleʻiwa"
   },
   {
     "title": "Halema'uma'u",
@@ -653,6 +658,11 @@
     "lyrics": "Auhea wale ana ʻoe\nE Kauanoeanuhea\nHuli au i ke onaona\nʻAʻole i loaʻa mai\n\nAia paha ʻoe i luna\nI ka malu o Maunaleo\nHe wehi no ia uka\nKa uka i Kānehoa\n\nNa ke ahe a ka Mālie\nE hali mai kuʻu aloha\nHe aloha i hiʻipoi ʻia\nNo nā kau a kau\n\nEia hoʻi ke aloha\nNo Kauanoeanuhea\nHe wehi no ia uka\nKa uka o Kānehoa"
   },
   {
+    "title": "Kauikeōlani",
+    "genre": "Hawaiian",
+    "lyrics": "Lei aku au i ke ʻala\nKe ʻala o ka ʻawapuhi\nOnaona wale hoʻi ia uka\nI ka uka ʻiuʻiu aʻo Nuʻuanu\n\nNoho aku au hoʻolono\nKa hoene mai a nā manu\nKe ʻala onaona o ka ʻawapuhi\nKauikeōlani he inoa"
+  },
+  {
     "title": "Kaulana Moloka'i",
     "genre": "Hawaiian",
     "lyrics": "Kaulana Molokaʻi\nMolokaʻi nui a Hina lae\nMe ka ulu kukui\nAʻo Lanikāula lae e\n\nEia Kalamaʻula\nMe kōna ulu niu lae\nʻĀina kaulana\nI ka hoʻopulapula lae e\n\nHaʻina ka inoa\nMolokaʻi nui a Hina lae\nMe ka ulu kukui\nAʻo Lanikāula lae e"
@@ -666,6 +676,11 @@
     "title": "Kaulana Ni'ihau",
     "genre": "Hawaiian",
     "lyrics": "Kaulana Ni’ihau, I Nā kupa ‘aina\nNā pu’uwai hamāmā, aloha malihini\n\n(Hui)\nE ka lei pūpū, o Kahelelani\nHe nui kaki, o nā pae ‘aina\n\nKau aku ke kahea, ke kupa mai ‘oe\nE Paina ai ho’i, me ‘ia kini\n\n(Hui)\n\n‘Olu’olu ho’i au, I kou leo nahenahe\nI ke kono ‘ana mai, me ka mālie\n\n(Hui)\n\nMai hilahila ‘oe, I ka hui ana ka ua\nE ho mai ko ihu honihoni mai\n\n(Hui)\n\nNo Ni’ihau, ka Mahalo nui\nNo nā pu’uwai hamāmā, e kaulana nei\n\n(Hui)"
+  },
+  {
+    "title": "Kaunolū",
+    "genre": "Hawaiian",
+    "lyrics": "He mea nui noʻu ka ʻāina laʻahia\nʻO Kaunolū, he ʻāina oneʻula i ka ʻae kai\n\nʻIke ʻia ʻo Halulu i ke alo o Pali Kaholo\nMe ke koʻa aʻo Kūnihi ma ʻō aku i Kāneʻāpua\n\nHui:\nKaulana kauhale o Kamehameha\nA me ka hale o Nahiʻenaʻena\n\nKiʻekiʻe Kaihālulu i ka ehu o ke kai\nMe ka wai ʻawaʻawa o ka lua wai aʻo Pāʻao\n\nHe keiki wiwo ʻole ʻo Puhikapu\nKa hua a Līloa me ʻAkahikuleana o Hawaiʻi\n\nʻO Kolomikimiki ka pā hī aku o ke kai\nKa mea hoʻīlina o Mākālei o Kaʻelehuluhulu\n\nHaʻina ʻia mai ana ka puana\nLei ana Kaunolū i ka lei Puakala o ke kula"
   },
   {
     "title": "Kawailehua'a'alakahonua",
@@ -718,6 +733,11 @@
     "title": "Ku'u Home O Kahalu'u",
     "genre": "Hawaiian",
     "lyrics": "I remember days when we were younger\nWe used to catch 'o'opu in the mountain stream\n'Round the Ko'olau hills, we'd ride on horseback\nSo long ago it seems it was a dream\n\nLast night I dreamt I was returning\nand my heart called out to you\nBut I fear you won't be like I left you\nMe kealoha ku'u home o Kahalu'u\n\nI remember days when we were wiser\nWhen our world was small enough for dreams\nAnd you have lingered there my sister\nAnd I no longer can it seems\n\nLast night I dreamt I was returning\nand my heart called out to you\nBut I fear I am not as I left you\nMe kealoha ku'u home o Kahalu'u\n\nChange is a strange thing, it cannot be denied\nIt can help you find yourself, or make you lose your pride\nMove with it slowly, as on the road we go\nPlease do not hold on to me, we all must go alone\n\nI remember days when we were smiling\nWhen we laughed and sang the whole night long\nAnd I will greet you as I find you\nWith the sharing of a brand new song\n\nLast night I dreamt I was returning\nand my heart called out to you\nTo please accept me as you'll find me\n\nMe ke aloha ku'u home o Kahalu'u (3x)"
+  },
+  {
+    "title": "Kuʻu ʻIʻini Mai Ka Lani",
+    "genre": "Hawaiian",
+    "lyrics": "Eia no ʻoe\nKuʻu ʻiʻini mai ka lani\nKuʻu kama ia noʻi nui ʻia\nUa Paʻa ke aloha me kuʻu lei\n\nHe hiʻi alo\nMilimili i ke alo\nHa'awi 'ia ma kuʻu pua\nKuʻu lei a i ka pua makamae\n\n(Hui)\nMahalo hoʻi i ka wale o ia pua\nI nā lei onaona nō\nHoaʻa kuʻu ʻiʻini\nMa muli o ke aloha\nKama 'ia ke aloha a paʻa pono\nHe mau ona no nā kau a kau\nKalo, kanu o ka ʻāina\nPili kuʻu ʻohana kuʻu lama \n\n(Hui)\n\nAloha no wau ia 'oe lā\nKou maka onaona palupalu 'eā\nHoʻi mai e ku'u ipo\nHonihoni mai lā au i kou papalina lahilahi\n'eā, 'eā, 'eā\n\nKuʻu ʻiʻini, Kuʻu ʻiʻini mai ka lani\n\n(Hui)\n\nKalo, kanu o ka ʻāina\nPili kuʻu ʻohana kuʻu lama \nHoaʻa kuʻu ʻiʻini\nMa mu---uli o---o ke aloha"
   },
   {
     "title": "Ku'u Lei Lahiahi",
@@ -1111,6 +1131,11 @@
     "title": "Pua Tubarose",
     "genre": "Hawaiian",
     "lyrics": "E kau mai ana ka haliʻa\nNo sweet tubarose poina ʻole\n\nMe he ala e ʻi mai ana iaʻu\nHe welina pau ʻole me ia pua\n\nAloha kuʻu pua ʻala onaona\nI wili ʻia me maile lau liʻi\n\nKe hea nei ku'u lei ʻala onaona\nE hoʻi mai kāua la e pili\n\nHaʻina ʻia mai ana ka puana\nKuʻu pua tubarose poina ʻole"
+  },
+  {
+    "title": "Pua Tulipa",
+    "genre": "Hawaiian",
+    "lyrics": "He aloha nō ʻoe, e kuʻu ipo\nE ka pua tulipa, e kuʻu milimili\n\nHe milimili ʻoe na ka lāhui\nPili mau a mau ma kuʻu poli\n\nMa kuʻu poli ʻoe e hoʻopunehana\nE ka ipo hoʻoheno o Hunakalia\n\nHunāhunā ʻole ia ke aloha iā ʻoe\nE ka nani kaulana o nēia ʻāina\n\nHaʻina ʻia mai ana ka puana\nE ka pua tulipa, e kuʻu milimili"
   },
   {
     "title": "Puamana",
