@@ -295,14 +295,15 @@ function downloadJson() {
 
 function fitLyrics(lyrics) {
   const isChordMode = lyrics.classList.contains('showing-chords');
-  const minimumSize = 14;
+  const minimumSize = 13;
   const maximumSize = 48;
   const availableHeight = Math.max(180, window.innerHeight - lyrics.getBoundingClientRect().top - 28);
   lyrics.style.fontSize = `${maximumSize}px`;
   const chordLines = lyrics.querySelector('.chord-lines');
   if (chordLines) chordLines.style.wordSpacing = '0px';
 
-  while (lyrics.scrollHeight > availableHeight && parseFloat(getComputedStyle(lyrics).fontSize) > minimumSize) {
+  while ((lyrics.scrollHeight > availableHeight || lyrics.scrollWidth > lyrics.clientWidth)
+    && parseFloat(getComputedStyle(lyrics).fontSize) > minimumSize) {
     lyrics.style.fontSize = `${parseFloat(getComputedStyle(lyrics).fontSize) - 1}px`;
   }
 

@@ -166,7 +166,7 @@ h2 { margin-bottom: 0; font-size: 1.25rem; font-weight: normal; }
 
 .lyrics-content h2 { margin-bottom: 26px; font-size: 2.15rem; line-height: 1.05; }
 
-.lyrics-text { max-height: calc(100vh - 215px); margin: 0; overflow-y: auto; white-space: pre-line; font-family: Georgia, 'Times New Roman', serif; line-height: 1.35; }
+.lyrics-text { max-height: calc(100vh - 215px); margin: 0; overflow-y: auto; white-space: pre; font-family: Georgia, 'Times New Roman', serif; line-height: 1.35; }
 
 .lyrics-text.showing-chords {
   overflow-x: hidden;
