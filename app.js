@@ -5,8 +5,8 @@ const genreFilter = document.querySelector('#genre-filter');
 const sortSongs = document.querySelector('#sort-songs');
 const emptySearch = document.querySelector('#empty-search');
 const songCount = document.querySelector('.song-count');
-const fontStatus = document.querySelector('#font-status');
 const randomSongButton = document.querySelector('#random-song');
+const randomSongToolbarButton = document.querySelector('#random-song-toolbar');
 const backButton = document.querySelector('#back-button');
 const converterButton = document.querySelector('#converter-button');
 const converterDialog = document.querySelector('#converter-dialog');
@@ -369,7 +369,6 @@ function fitLyrics(lyrics) {
 
   const isOverflowing = lyrics.scrollHeight > availableHeight;
   lyrics.classList.toggle('is-overflowing', isOverflowing);
-  fontStatus.textContent = `${Math.round(parseFloat(getComputedStyle(lyrics).fontSize))}px${isOverflowing ? ' · long song' : ''}`;
 }
 
 function showMessage(message, isError = false) {
@@ -388,8 +387,9 @@ sortSongs.addEventListener('change', () => {
   localStorage.setItem('lyrics-book-sort', sortSongs.value);
   renderContents();
 });
-randomSongButton.addEventListener('click', openRandomSong);
-converterButton.addEventListener('click', openConverter);
+if (randomSongButton) if (randomSongButton) randomSongButton.addEventListener('click', openRandomSong);
+if (randomSongToolbarButton) randomSongToolbarButton.addEventListener('click', openRandomSong);
+if (converterButton) converterButton.addEventListener('click', openConverter);
 closeConverter.addEventListener('click', closeConverterDialog);
 converterTitle.addEventListener('input', updateJsonOutput);
 converterGenre.addEventListener('input', updateJsonOutput);

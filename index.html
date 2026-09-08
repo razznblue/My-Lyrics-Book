@@ -11,10 +11,13 @@
 <body class="home-mode">
   <header class="site-header">
     <div class="header-inner">
-      <a class="brand" href="#songs" aria-label="Lyrics Book home">Puke Mele</a>
+      <div class="main-title">
+        <img class="logo" src="favicon.png" alt="" aria-hidden="true">
+        <a class="brand" href="#songs" aria-label="Lyrics Book home">Puke Mele</a>
+      </div>
       <div class="header-actions">
         <button id="converter-button" class="converter-button" type="button" aria-label="Convert lyrics to JSON" title="Convert lyrics to JSON">{ }</button>
-        <button id="random-song" class="random-button" type="button" aria-label="Open a random song" title="Open a random song" data-tooltip="Random song">⤨</button>
+        <button id="random-song" class="random-button" type="button" aria-label="Open a random song" title="Open a random song" data-tooltip="Random song">Random song</button>
       </div>
     </div>
   </header>
@@ -23,7 +26,7 @@
     <section class="intro" aria-labelledby="page-title">
       <p class="eyebrow">Eh what? Like Kanikapila?</p>
       <!-- <h1 id="page-title">Optional Title</h1> -->
-      <p class="subtitle">A songbook for performing, learning, enjoying, and perpetuating mele Hawai`i. </p>
+      <p class="subtitle">A songbook for learning, performing, enjoying, and perpetuating mele Hawai`i. </p>
     </section>
 
     <div class="book-layout"> 
@@ -58,8 +61,7 @@
 
       <article id="lyrics-panel" class="lyrics-panel" aria-labelledby="song-title">
         <div class="lyrics-toolbar">
-          <button id="back-button" class="back-button" type="button" aria-label="Back to contents" title="Back to contents"><</button>
-          <span class="reading-label">Now reading</span>
+          <button id="back-button" class="back-button" type="button" aria-label="Back to contents" title="Back to contents">×</button>
           <div class="song-tools" aria-label="Song tools">
             <label class="chords-toggle" title="Show chords">
               <input id="show-chords" type="checkbox">
@@ -75,7 +77,6 @@
               <span>Audio</span>
             </label>
           </div>
-          <span id="font-status" class="font-status" aria-live="polite"></span>
         </div>
         <div id="lyrics-content" class="lyrics-content" aria-live="polite">
           <p class="loading-message">Loading your songs...</p>
