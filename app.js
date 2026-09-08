@@ -210,13 +210,70 @@ function transposeChordText(chords, steps) {
   const chordPattern = /\b([A-G](?:#|b)?(?:(?:maj|min|dim|aug|sus|add)?\d*)?(?:\/[A-G](?:#|b)?)?)\b/g;
 
   return chords.split('\n').map(line => {
-    const matches = [...line.matchAll(chordPattern)];
-    const hasChordShape = matches.length > 1
-      || /^[\sA-Ga-g0-9#b/()+-]+$/.test(line.trim())
-      || matches.some(match => /[#b/]|\d|maj|min|dim|aug|sus|add/.test(match[1]) || /\s{2,}/.test(line.slice(match.index + match[1].length)));
-
-    return hasChordShape ? line.replace(chordPattern, token => transposeChordToken(token, steps)) : line;
+    return isChordLine(line, chordPattern)
+      ? line.replace(chordPattern, token => transposeChordToken(token, steps))
+      : line;
   }).join('\n');
+}
+
+function isChordLine(line, chordPattern = /\b([A-G](?:#|b)?(?:(?:maj|min|dim|aug|sus|add)?\d*)?(?:\/[A-G](?:#|b)?)?)\b/g) {
+  const matches = [...line.matchAll(chordPattern)];
+  return matches.length > 1
+    || /^[\sA-Ga-g0-9#b/()+-]+$/.test(line.trim())
+    || matches.some(match => /[#b/]|\d|maj|min|dim|aug|sus|add/.test(match[1]) || /\s{2,}/.test(line.slice(match.index + match[1].length)));
+}
+
+function findWrapBoundary(chordLine, lyricLine, start, end) {
+  for (let boundary = end; boundary > start; boundary -= 1) {
+    const chordBreak = boundary === chordLine.length || /\s/.test(chordLine[boundary - 1] || '');
+    const lyricBreak = boundary === lyricLine.length || /\s/.test(lyricLine[boundary - 1] || '');
+    if (chordBreak && lyricBreak) return boundary;
+  }
+  return end;
+}
+
+function wrapAlignedLines(chordLine, lyricLine, maxColumns) {
+  const lineLength = Math.max(chordLine.length, lyricLine.length);
+  if (lineLength <= maxColumns) return [chordLine, lyricLine];
+
+  const wrappedLines = [];
+  let start = 0;
+  while (start < lineLength) {
+    const end = Math.min(start + maxColumns, lineLength);
+    const boundary = end === lineLength ? end : findWrapBoundary(chordLine, lyricLine, start, end);
+    wrappedLines.push(chordLine.slice(start, boundary).trimEnd(), lyricLine.slice(start, boundary).trimEnd());
+    start = boundary;
+  }
+  return wrappedLines;
+}
+
+function wrapChordText(lyrics, chordText) {
+  const chordLines = lyrics.querySelector('.chord-lines');
+  if (!chordLines) return;
+
+  const font = getComputedStyle(lyrics);
+  const canvas = document.createElement('canvas');
+  const context = canvas.getContext('2d');
+  context.font = `${font.fontWeight} ${font.fontSize} ${font.fontFamily}`;
+  const characterWidth = context.measureText('0').width + parseFloat(font.letterSpacing || 0);
+  const maxColumns = Math.max(1, Math.floor(lyrics.clientWidth / characterWidth));
+  const lines = chordText.split('\n');
+  const wrappedLines = [];
+
+  for (let index = 0; index < lines.length; index += 1) {
+    const line = lines[index];
+    const nextLine = lines[index + 1];
+    if (isChordLine(line) && nextLine && nextLine.trim() && !isChordLine(nextLine)) {
+      wrappedLines.push(...wrapAlignedLines(line, nextLine, maxColumns));
+      index += 1;
+    } else if (line.length > maxColumns) {
+      wrappedLines.push(...wrapAlignedLines('', line, maxColumns));
+    } else {
+      wrappedLines.push(line);
+    }
+  }
+
+  chordLines.textContent = wrappedLines.join('\n');
 }
 
 function updateTransposeStatus() {
@@ -231,9 +288,12 @@ function renderChordDisplay() {
   const lyrics = document.querySelector('.lyrics-text');
   if (!lyrics || !showChordsCheckbox.checked || !lyrics.dataset.chords) return;
 
-  const chordLines = lyrics.querySelector('.chord-lines');
-  if (chordLines) chordLines.textContent = transposeChordText(lyrics.dataset.chords, transposeSteps);
+  renderChordText(lyrics);
   fitLyrics(lyrics);
+}
+
+function renderChordText(lyrics) {
+  wrapChordText(lyrics, transposeChordText(lyrics.dataset.chords, transposeSteps));
 }
 
 function showContents() {
@@ -299,20 +359,12 @@ function fitLyrics(lyrics) {
   const maximumSize = 48;
   const availableHeight = Math.max(180, window.innerHeight - lyrics.getBoundingClientRect().top - 28);
   lyrics.style.fontSize = `${maximumSize}px`;
-  const chordLines = lyrics.querySelector('.chord-lines');
-  if (chordLines) chordLines.style.wordSpacing = '0px';
+  if (isChordMode) renderChordText(lyrics);
 
-  while ((lyrics.scrollHeight > availableHeight || lyrics.scrollWidth > lyrics.clientWidth)
+  while ((lyrics.scrollHeight > availableHeight || (!isChordMode && lyrics.scrollWidth > lyrics.clientWidth))
     && parseFloat(getComputedStyle(lyrics).fontSize) > minimumSize) {
     lyrics.style.fontSize = `${parseFloat(getComputedStyle(lyrics).fontSize) - 1}px`;
-  }
-
-  if (isChordMode && lyrics.scrollWidth > lyrics.clientWidth) {
-    let wordSpacing = 0;
-    while (chordLines.scrollWidth > lyrics.clientWidth && wordSpacing > -10) {
-      wordSpacing -= 0.5;
-      chordLines.style.wordSpacing = `${wordSpacing}px`;
-    }
+    if (isChordMode) renderChordText(lyrics);
   }
 
   const isOverflowing = lyrics.scrollHeight > availableHeight;
@@ -358,6 +410,7 @@ showChordsCheckbox.addEventListener('change', () => {
     lyrics.replaceChildren(chordLines);
     lyrics.classList.add('showing-chords');
     transposeControls.hidden = false;
+    renderChordText(lyrics);
   } else {
     lyrics.textContent = lyrics.dataset.lyrics;
     lyrics.classList.remove('showing-chords');
