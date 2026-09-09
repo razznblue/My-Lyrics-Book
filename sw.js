@@ -1,4 +1,4 @@
-const CACHE_NAME = 'songs-site-v1';
+const CACHE_NAME = 'songs-site-v2';
 
 const CORE_ASSETS = [
   '/',
@@ -41,6 +41,15 @@ self.addEventListener('fetch', (event) => {
           return response;
         })
         .catch(() => caches.match(event.request))
+    );
+    return;
+  }
+
+  if (event.request.mode === 'navigate') {
+    event.respondWith(
+      caches.match(event.request).then((cached) =>
+        cached || caches.match('/index.html')
+      )
     );
     return;
   }
