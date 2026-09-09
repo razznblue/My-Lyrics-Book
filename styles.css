@@ -223,13 +223,20 @@ h2 { margin-bottom: 0; font-size: 1.25rem; font-weight: normal; }
     justify-content: flex-start;
     gap: 8px;
   }
+  .song-tools {
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    overflow: visible;
+    row-gap: 8px;
+  }
 }
 
 .back-button:hover, .back-button:focus-visible { border-color: var(--accent); color: var(--accent); outline: none; }
 
 .song-tools {
   display: flex;
-  align-items: center;
   gap: 14px;
   min-width: 0;
   flex-shrink: 1;
@@ -441,6 +448,61 @@ h2 { margin-bottom: 0; font-size: 1.25rem; font-weight: normal; }
 
 .primary-action:hover, .primary-action:focus-visible { color: white; background: #174d46; }
 
+body.landing-mode .book-layout { display: none; }
+body.landing-mode .header-actions { display: none; }
+
+.back-to-landing-button {
+  display: none;
+  padding: 8px 10px;
+  border: 1px solid var(--line);
+  border-radius: 3px;
+  color: var(--accent);
+  background: var(--paper);
+  font-family: 'Trebuchet MS', sans-serif;
+  font-size: .72rem;
+  font-weight: bold;
+  letter-spacing: .04em;
+  cursor: pointer;
+}
+
+.back-to-landing-button:hover,
+.back-to-landing-button:focus-visible {
+  border-color: var(--accent);
+  background: var(--accent-light);
+  outline: none;
+}
+
+body:not(.landing-mode) .back-to-landing-button { display: inline-block; }
+
+.landing-copy {
+  max-width: 42rem;
+  margin: 14px 0 0;
+  color: var(--muted);
+  line-height: 1.6;
+}
+
+.open-book-button {
+  margin-top: 22px;
+  padding: 12px 22px;
+  border: 1px solid var(--accent);
+  border-radius: 999px;
+  color: white;
+  background: var(--accent);
+  font-family: 'Trebuchet MS', sans-serif;
+  font-size: .8rem;
+  font-weight: bold;
+  letter-spacing: .04em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background .15s ease;
+}
+
+.open-book-button:hover,
+.open-book-button:focus-visible {
+  background: #174d46;
+  outline: none;
+}
+
 body.home-mode .lyrics-panel { display: none; }
 
 body.home-mode .book-layout { grid-template-columns: minmax(220px, 520px); }
@@ -449,7 +511,8 @@ body.reading-mode { overflow-y: auto; }
 
 body.reading-mode.home-mode .lyrics-panel { display: block; }
 
-body.reading-mode .intro,
+body:not(.landing-mode) .intro { display: none; }
+
 body.reading-mode .contents-panel,
 body.reading-mode .site-footer { display: none; }
 

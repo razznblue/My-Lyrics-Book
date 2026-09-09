@@ -1,3 +1,5 @@
+const openBookButton = document.querySelector('#open-book');
+const backToLandingButton = document.querySelector('#back-to-landing');
 const songList = document.querySelector('#song-list');
 const lyricsContent = document.querySelector('#lyrics-content');
 const searchInput = document.querySelector('#song-search');
@@ -133,7 +135,7 @@ function showSong(index) {
   if (!song) return;
   selectedIndex = index;
   localStorage.setItem('lyrics-book-current-song', index);
-  document.body.classList.remove('home-mode');
+  document.body.classList.remove('home-mode', 'landing-mode');
   lyricsContent.replaceChildren();
 
   const title = document.createElement('h2');
@@ -424,6 +426,18 @@ function showMessage(message, isError = false) {
   lyricsContent.replaceChildren(paragraph);
 }
 
+if (openBookButton) {
+  openBookButton.addEventListener('click', () => {
+    document.body.classList.remove('landing-mode');
+    document.body.classList.add('home-mode');
+  });
+}
+if (backToLandingButton) {
+  backToLandingButton.addEventListener('click', () => {
+    document.body.classList.remove('home-mode');
+    document.body.classList.add('landing-mode');
+  });
+}
 searchInput.addEventListener('input', renderContents);
 genreFilter.addEventListener('change', () => {
   localStorage.setItem('lyrics-book-genre', genreFilter.value);
