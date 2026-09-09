@@ -185,18 +185,32 @@ h2 { margin-bottom: 0; font-size: 1.25rem; font-weight: normal; }
 }
 
 .back-button {
-  display: none;
-  width: 32px;
-  height: 32px;
-  padding: 0;
-  border: 1px solid var(--line);
-  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: auto;
+  height: 28px;
+  padding: 0 14px;
+  border: 1px solid var(--accent);
+  border-radius: 888px;
   color: var(--ink);
   background: var(--paper);
-  font-family: Arial, sans-serif;
-  font-size: 1.5rem;
+  font-family: 'Trebuchet MS', sans-serif;
+  font-size: .72rem;
+  font-weight: bold;
+  letter-spacing: .06em;
   line-height: 1;
+  text-align: center;
+  white-space: nowrap;
   cursor: pointer;
+}
+.back-button:hover {
+  background: var(--accent-light);
+}
+.back-arrow {
+  font-size: 1.3em;
+  padding-right: 0.3rem;
 }
 
 @media (max-width: 640px) {
@@ -435,7 +449,7 @@ body.reading-mode .book-layout { display: block; }
 body.reading-mode .lyrics-panel { min-height: 100svh; height: auto; border: 0; padding: 24px clamp(24px, 8vw, 140px) 32px; }
 
 body.reading-mode .back-button {
-  display: block;
+  display: inline-flex;
   flex: 0 0 auto;
   margin-right: 4px;
 }
@@ -471,7 +485,6 @@ body.reading-mode .lyrics-text.is-overflowing { max-height: none; overflow: visi
   body.reading-mode .lyrics-panel { padding: 16px 18px 24px; }
   body.reading-mode .lyrics-text { max-height: calc(100vh - 80px); }
   body.reading-mode .lyrics-text.is-overflowing { max-height: none; overflow: visible; }
-  body.reading-mode .back-button { display: block; position: fixed; bottom: 24px; right: 24px; width: 48px; height: 48px; font-size: 1.8rem; z-index: 1000; border-radius: 50%; }
   body.reading-mode .lyrics-toolbar {
     flex-wrap: nowrap;
     align-items: center;
