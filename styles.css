@@ -287,6 +287,19 @@ h2 { margin-bottom: 0; font-size: 1.25rem; font-weight: normal; }
 
 .chord-lines { display: block; width: max-content; }
 
+.chord-row {
+  display: inline-block;
+  width: 100%;
+  padding: 1px 0;
+  background: var(--wash);
+  border-radius: 3px;
+}
+.chord-token {
+  background: var(--wash);
+  box-shadow: 0 0 0 3px var(--wash);
+  border-radius: 3px;
+}
+
 .lyrics-text.is-overflowing { max-height: calc((100vh - 215px) * 2); padding-right: 10px; }
 
 .error-message { max-width: 35rem; }

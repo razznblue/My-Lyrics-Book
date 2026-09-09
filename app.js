@@ -207,7 +207,7 @@ function transposeChordToken(token, steps) {
 }
 
 function transposeChordText(chords, steps) {
-  const chordPattern = /\b([A-G](?:#|b)?(?:(?:maj|min|dim|aug|sus|add)?\d*)?(?:\/[A-G](?:#|b)?)?)\b/g;
+  const chordPattern = /\b([A-G](?:#|b)?(?:(?:maj|min|dim|aug|sus|add|m)?\d*(?:[#b]\d+)*)?(?:\/[A-G](?:#|b)?)?)\b/g;
 
   return chords.split('\n').map(line => {
     return isChordLine(line, chordPattern)
@@ -216,7 +216,7 @@ function transposeChordText(chords, steps) {
   }).join('\n');
 }
 
-function isChordLine(line, chordPattern = /\b([A-G](?:#|b)?(?:(?:maj|min|dim|aug|sus|add)?\d*)?(?:\/[A-G](?:#|b)?)?)\b/g) {
+function isChordLine(line, chordPattern = /\b([A-G](?:#|b)?(?:(?:maj|min|dim|aug|sus|add|m)?\d*(?:[#b]\d+)*)?(?:\/[A-G](?:#|b)?)?)\b/g) {
   const matches = [...line.matchAll(chordPattern)];
   return matches.length > 1
     || /^[\sA-Ga-g0-9#b/()+-]+$/.test(line.trim())
@@ -245,6 +245,42 @@ function wrapAlignedLines(chordLine, lyricLine, maxColumns) {
     start = boundary;
   }
   return wrappedLines;
+}
+
+function applyChordHighlighting(lyrics) {
+  const chordLines = lyrics.querySelector('.chord-lines');
+  if (!chordLines) return;
+  const lines = chordLines.textContent.split('\n');
+  chordLines.replaceChildren();
+  lines.forEach((line, index) => {
+    if (isChordLine(line) && line.trim()) {
+      appendHighlightedChordLine(chordLines, line);
+    } else {
+      chordLines.append(document.createTextNode(line));
+    }
+    if (index < lines.length - 1) chordLines.append(document.createTextNode('\n'));
+  });
+}
+
+const chordTokenPattern = /\b([A-G](?:#|b)?(?:(?:maj|min|dim|aug|sus|add|m)?\d*(?:[#b]\d+)*)?(?:\/[A-G](?:#|b)?)?)\b/g;
+
+function appendHighlightedChordLine(container, line) {
+  const pattern = new RegExp(chordTokenPattern.source, 'g');
+  let lastEnd = 0;
+  let match;
+  while ((match = pattern.exec(line)) !== null) {
+    if (match.index > lastEnd) {
+      container.append(document.createTextNode(line.slice(lastEnd, match.index)));
+    }
+    const tokenSpan = document.createElement('span');
+    tokenSpan.className = 'chord-token';
+    tokenSpan.textContent = match[0];
+    container.append(tokenSpan);
+    lastEnd = match.index + match[0].length;
+  }
+  if (lastEnd < line.length) {
+    container.append(document.createTextNode(line.slice(lastEnd)));
+  }
 }
 
 function wrapChordText(lyrics, chordText) {
@@ -369,6 +405,8 @@ function fitLyrics(lyrics) {
 
   const isOverflowing = lyrics.scrollHeight > availableHeight;
   lyrics.classList.toggle('is-overflowing', isOverflowing);
+
+  if (isChordMode) applyChordHighlighting(lyrics);
 }
 
 function showMessage(message, isError = false) {
