@@ -188,6 +188,7 @@ h2 { margin-bottom: 0; font-size: 1.25rem; font-weight: normal; }
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  gap: 0.3rem;
   flex-shrink: 0;
   width: auto;
   height: 28px;
@@ -201,7 +202,6 @@ h2 { margin-bottom: 0; font-size: 1.25rem; font-weight: normal; }
   font-weight: bold;
   letter-spacing: .06em;
   line-height: 1;
-  text-align: center;
   white-space: nowrap;
   cursor: pointer;
 }
@@ -209,8 +209,16 @@ h2 { margin-bottom: 0; font-size: 1.25rem; font-weight: normal; }
   background: var(--accent-light);
 }
 .back-arrow {
-  font-size: 1.3em;
+  width: 1.2em;
+  height: 1.2em;
   padding-right: 0.3rem;
+  display: inline-block;
+  vertical-align: middle;
+}
+.back-label {
+  display: inline-block;
+  line-height: 1;
+  text-align: center;
 }
 
 @media (max-width: 640px) {
