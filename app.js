@@ -35,6 +35,14 @@ const savedGenre = localStorage.getItem('lyrics-book-genre') || 'all';
 const savedSort = localStorage.getItem('lyrics-book-sort') || 'az';
 const contentsScrollKey = 'lyrics-book-contents-scroll';
 
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('/sw.js').catch((err) => {
+      console.error('Service worker registration failed:', err);
+    });
+  });
+}
+
 async function loadSongs() {
   try {
     const response = await fetch('songs.json', { cache: 'no-store' });
