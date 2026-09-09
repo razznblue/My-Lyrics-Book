@@ -100,10 +100,6 @@ button, input { font: inherit; }
   margin-left: 0;
 }
 
-.random-button::after { position: absolute; top: calc(100% + 8px); left: 50%; z-index: 2; padding: 6px 8px; border-radius: 3px; color: white; background: var(--ink); content: attr(data-tooltip); font-family: 'Trebuchet MS', sans-serif; font-size: .7rem; line-height: 1; opacity: 0; pointer-events: none; transform: translate(-50%, -3px); transition: opacity .15s ease, transform .15s ease; white-space: nowrap; }
-
-.random-button:hover::after, .random-button:focus-visible::after { opacity: 1; transform: translate(-50%, 0); }
-
 .random-button:hover, .random-button:focus-visible {
   filter: brightness(1.05);
   box-shadow: 0 8px 18px rgba(30, 98, 89, 0.22);
