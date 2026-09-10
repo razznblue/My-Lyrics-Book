@@ -4,6 +4,7 @@
   --line: #d9dfe0;
   --paper: #ffffff;
   --wash: #f4f6f5;
+  --chord-wash: #e6e5e5;
   --accent: #1e6259;
   --accent-light: #e3f0ed;
   --minimum-lyrics-size: 14px;
@@ -295,11 +296,11 @@ h2 { margin-bottom: 0; font-size: 1.25rem; font-weight: normal; }
   width: 100%;
   padding: 1px 0;
   background: var(--wash);
-  border-radius: 3px;
+  border-radius: 2px;
 }
 .chord-token {
-  background: var(--wash);
-  box-shadow: 0 0 0 3px var(--wash);
+  background: var(--chord-wash);
+  box-shadow: 0 0 0 1.5px var(--chord-wash);
   border-radius: 3px;
 }
 
