@@ -6,6 +6,7 @@
   --wash: #f4f6f5;
   --chord-wash: #e6e5e5;
   --accent: #1e6259;
+  --accent-hover: #174d46;
   --accent-light: #e3f0ed;
   --minimum-lyrics-size: 14px;
   font-family: Georgia, 'Times New Roman', serif;
@@ -412,7 +413,7 @@ h2 { margin-bottom: 0; font-size: 1.25rem; font-weight: normal; }
 
 .site-footer a:hover,
 .site-footer a:focus-visible {
-  color: #123f3a;
+  color: var(--accent-hover);
   text-decoration: underline;
   text-decoration-thickness: 2px;
   outline: none;
@@ -548,7 +549,7 @@ body:not(.landing-mode) .back-to-landing-button { display: inline-block; }
 
 .open-book-button:hover,
 .open-book-button:focus-visible {
-  background: #174d46;
+  background: var(--accent-hover);
   outline: none;
 }
 

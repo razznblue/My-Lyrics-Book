@@ -1,3 +1,4 @@
+/* DOM Selectors */
 const openBookButton = document.querySelector('#open-book');
 const backToLandingButton = document.querySelector('#back-to-landing');
 const songList = document.querySelector('#song-list');
@@ -29,6 +30,23 @@ const transposeUpButton = document.querySelector('#transpose-up');
 const transposeStatus = document.querySelector('#transpose-status');
 const showAudioCheckbox = document.querySelector('#show-audio');
 
+/* Load in and populate config values */
+document.title = window.APP_NAME || 'Puke Mele';
+const appNameEl = document.querySelector('#app-name');
+if (appNameEl) appNameEl.textContent = window.APP_NAME || 'Puke Mele';
+const appTaglineEl = document.querySelector('#app-tagline');
+if (appTaglineEl) appTaglineEl.textContent = window.APP_TAGLINE || '';
+if (window.THEME_ACCENT) {
+  document.documentElement.style.setProperty('--accent', window.THEME_ACCENT);
+}
+if (window.THEME_ACCENT_HOVER) {
+  document.documentElement.style.setProperty('--accent-hover', window.THEME_ACCENT_HOVER);
+}
+if (window.THEME_MUTED) {
+  document.documentElement.style.setProperty('--muted', window.THEME_MUTED);
+}
+
+/* Fields */
 let songs = [];
 let selectedIndex = 0;
 let transposeSteps = 0;
@@ -37,11 +55,13 @@ const savedGenre = localStorage.getItem('lyrics-book-genre') || 'all';
 const savedSort = localStorage.getItem('lyrics-book-sort') || 'az';
 const contentsScrollKey = 'lyrics-book-contents-scroll';
 
+/* LocalStorage to support save page state */
 if (localStorage.getItem('lyrics-book-opened') === 'true') {
   document.body.classList.remove('landing-mode');
   document.body.classList.add('home-mode');
 }
 
+/* Bookmark Song Support */
 const bookmarkedTitles = new Set(JSON.parse(localStorage.getItem('lyrics-book-bookmarks') || '[]'));
 
 function isBookmarked(song) {
@@ -59,6 +79,7 @@ function toggleBookmark(song) {
 
 const bookmarkIconSvg = `<svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M6 3.5C6 2.67 6.67 2 7.5 2h9c.83 0 1.5.67 1.5 1.5v18l-6-4.2-6 4.2v-18z"/></svg>`;
 
+/* Register Service Worker for offline capabilities */
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => {
     navigator.serviceWorker.register('/sw.js').catch((err) => {
@@ -67,19 +88,24 @@ if ('serviceWorker' in navigator) {
   });
 }
 
+/* Load song data via config */
 async function loadSongs() {
   try {
-    const response = await fetch('songs.json', { cache: 'no-store' });
-    if (!response.ok) throw new Error(`Could not load songs.json (${response.status})`);
-    songs = await response.json();
-    if (!Array.isArray(songs)) throw new Error('songs.json must contain an array of songs.');
+    const sources = window.SONG_SOURCES || ['songs.json'];
+    const results = await Promise.all(sources.map(async (file) => {
+      const response = await fetch(file, { cache: 'no-store' });
+      if (!response.ok) throw new Error(`Could not load ${file} (${response.status})`);
+      const data = await response.json();
+      if (!Array.isArray(data)) throw new Error(`${file} must contain an array of songs.`);
+      return data;
+    }));
+    songs = results.flat();
     populateGenreFilter();
     genreFilter.value = [...genreFilter.options].some(option => option.value === savedGenre) ? savedGenre : 'all';
     sortSongs.value = savedSort === 'default' ? 'az' : (['az', 'za'].includes(savedSort) ? savedSort : 'az');
     renderContents();
     if (!songs.length) showMessage('No songs yet. Add a song object to songs.json.');
-    
-    // Restore the current song if one was open before refresh
+
     const savedSongIndex = localStorage.getItem('lyrics-book-current-song');
     if (savedSongIndex !== null && parseInt(savedSongIndex) < songs.length) {
       showSong(parseInt(savedSongIndex));
@@ -90,6 +116,7 @@ async function loadSongs() {
   }
 }
 
+/* Helper Functions */
 function renderContents() {
   const query = searchInput.value.trim().toLowerCase();
   const matches = songs
@@ -467,6 +494,7 @@ function showMessage(message, isError = false) {
   lyricsContent.replaceChildren(paragraph);
 }
 
+/* Event Listeners */
 if (openBookButton) {
   openBookButton.addEventListener('click', () => {
     document.body.classList.remove('landing-mode');

@@ -14,7 +14,9 @@
     <div class="header-inner">
       <div class="main-title">
         <img class="logo" src="/icons/favicon.ico" alt="" aria-hidden="true">
-        <a class="brand" href="#songs" aria-label="Lyrics Book home">Puke Mele</a>
+        <!-- <a class="brand" href="#songs" aria-label="Lyrics Book home">Puke Mele</a> -->
+        <!-- Title is populated from config.js -->
+        <a class="brand" id="app-name" href="#songs" aria-label="Lyrics Book home"></a>
       </div>
       <div class="header-actions">
         <button id="back-to-landing" class="back-to-landing-button" type="button" aria-label="Back to home" title="Back to home">Home</button>
@@ -28,7 +30,8 @@
     <section class="intro" aria-labelledby="page-title">
       <p class="eyebrow">Eh what? Like Kanikapila?</p>
       <!-- <h1 id="page-title">Optional Title</h1> -->
-      <p class="subtitle">A songbook for learning, performing, enjoying, and perpetuating mele Hawai`i. </p>
+      <!-- <p class="subtitle">A songbook for learning, performing, enjoying, and perpetuating mele Hawai`i. </p> -->
+      <p class="subtitle" id="app-tagline"></p>
       <p class="landing-copy">
         Add whatever extra context, backstory, or instructions you'd like here — this text only shows before the songbook opens.
       </p>
@@ -141,6 +144,7 @@
     </div>
   </dialog>
 
+  <script src="config.js"></script>
   <script src="app.js"></script>
 </body>
 </html>
