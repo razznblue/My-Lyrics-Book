@@ -1,4 +1,4 @@
-const CACHE_NAME = 'songs-site-v9';
+const CACHE_NAME = 'puke-mele-v10';
 
 const CORE_ASSETS = [
   '/',
