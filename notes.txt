@@ -1,9 +1,17 @@
+TODO:
+ - A Oia not appearing at top of list.
+ - Allow search to work tih okina and kahako markers
+ - Home Page Content
+  - Explanations
+  - How to use
+  - How to submit a song
+  - How to contribute to project (add/edit features)
+ - Add Design Overhaul
+ - Add More Songs
+ - Go through existing songs to add chord/audio/embeds
+
 Songs to Add:
 
-Margarita
-Mr Sun Cho Lee
-Live A Little
-Sunflower - C&K
 One Day Soon
 House at pooh corner
 When the morning comes - Kalapana
@@ -24,3 +32,24 @@ Shine On
 Misery's End
 Starting All Over again
 I Want You To Know - Kekai Boys
+Sand In My Boots
+On In A Million You Da Nuuanu Brothers
+
+Na limahana - ka leo o kalani
+Na moku Eha
+E hoopili mau i kuu puuwai
+he manao wale Oe
+Kuu Tita
+Keawaiki - anelaikalani
+Kaha ka manu
+Mele o kahoolawe
+mount kaala hula
+pauoa liko ka lehua
+ainahau
+lei koele
+aliipoe
+kuu papale
+e ike i ka nani ao poliahu
+kuu pua aloha - waipuna
+
+
