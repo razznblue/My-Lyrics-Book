@@ -37,6 +37,11 @@ const savedGenre = localStorage.getItem('lyrics-book-genre') || 'all';
 const savedSort = localStorage.getItem('lyrics-book-sort') || 'az';
 const contentsScrollKey = 'lyrics-book-contents-scroll';
 
+if (localStorage.getItem('lyrics-book-opened') === 'true') {
+  document.body.classList.remove('landing-mode');
+  document.body.classList.add('home-mode');
+}
+
 const bookmarkedTitles = new Set(JSON.parse(localStorage.getItem('lyrics-book-bookmarks') || '[]'));
 
 function isBookmarked(song) {
@@ -383,6 +388,7 @@ function showContents() {
   localStorage.removeItem('lyrics-book-current-song');
   document.body.classList.remove('reading-mode');
   document.body.classList.add('home-mode');
+  localStorage.setItem('lyrics-book-opened', 'true');
   requestAnimationFrame(restoreContentsScroll);
 }
 
@@ -465,12 +471,14 @@ if (openBookButton) {
   openBookButton.addEventListener('click', () => {
     document.body.classList.remove('landing-mode');
     document.body.classList.add('home-mode');
+    localStorage.setItem('lyrics-book-opened', 'true');
   });
 }
 if (backToLandingButton) {
   backToLandingButton.addEventListener('click', () => {
     document.body.classList.remove('home-mode');
     document.body.classList.add('landing-mode');
+    localStorage.removeItem('lyrics-book-opened');
   });
 }
 searchInput.addEventListener('input', renderContents);
