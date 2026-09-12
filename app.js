@@ -37,6 +37,23 @@ const savedGenre = localStorage.getItem('lyrics-book-genre') || 'all';
 const savedSort = localStorage.getItem('lyrics-book-sort') || 'az';
 const contentsScrollKey = 'lyrics-book-contents-scroll';
 
+const bookmarkedTitles = new Set(JSON.parse(localStorage.getItem('lyrics-book-bookmarks') || '[]'));
+
+function isBookmarked(song) {
+  return bookmarkedTitles.has(song.title);
+}
+
+function toggleBookmark(song) {
+  if (bookmarkedTitles.has(song.title)) {
+    bookmarkedTitles.delete(song.title);
+  } else {
+    bookmarkedTitles.add(song.title);
+  }
+  localStorage.setItem('lyrics-book-bookmarks', JSON.stringify([...bookmarkedTitles]));
+}
+
+const bookmarkIconSvg = `<svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M6 3.5C6 2.67 6.67 2 7.5 2h9c.83 0 1.5.67 1.5 1.5v18l-6-4.2-6 4.2v-18z"/></svg>`;
+
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => {
     navigator.serviceWorker.register('/sw.js').catch((err) => {
@@ -80,8 +97,13 @@ function renderContents() {
     matches.sort((left, right) => direction * String(left.song.title).localeCompare(String(right.song.title)));
   }
 
+  // Bookmarked songs float to the top, preserving order within each group
+  matches.sort((left, right) => Number(isBookmarked(right.song)) - Number(isBookmarked(left.song)));
+
   songList.replaceChildren(...matches.map(({ song, index }) => {
     const item = document.createElement('li');
+    item.className = 'song-item';
+
     const button = document.createElement('button');
     button.className = 'song-link';
     button.type = 'button';
@@ -91,7 +113,20 @@ function renderContents() {
       saveContentsScroll();
       showSong(index);
     });
-    item.append(button);
+
+    const bookmarked = isBookmarked(song);
+    const bookmarkButton = document.createElement('button');
+    bookmarkButton.className = 'bookmark-button';
+    bookmarkButton.type = 'button';
+    bookmarkButton.classList.toggle('is-bookmarked', bookmarked);
+    bookmarkButton.setAttribute('aria-label', bookmarked ? `Remove ${song.title} from bookmarks` : `Bookmark ${song.title}`);
+    bookmarkButton.innerHTML = bookmarkIconSvg;
+    bookmarkButton.addEventListener('click', () => {
+      toggleBookmark(song);
+      renderContents();
+    });
+
+    item.append(button, bookmarkButton);
     return item;
   }));
 

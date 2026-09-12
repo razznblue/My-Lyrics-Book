@@ -163,6 +163,54 @@ h2 { margin-bottom: 0; font-size: 1.25rem; font-weight: normal; }
 
 .song-link[aria-current="true"] { color: var(--accent); background: var(--accent-light); font-weight: bold; }
 
+.song-item {
+  display: flex;
+  align-items: center;
+}
+
+.song-item .song-link {
+  flex: 1 1 auto;
+  width: auto;
+  min-width: 0;
+}
+
+.bookmark-button {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  padding: 0;
+  margin-right: 8px;
+  border: 0;
+  border-radius: 3px;
+  color: var(--muted);
+  background: transparent;
+  cursor: pointer;
+}
+
+.bookmark-button svg {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.6;
+}
+
+.bookmark-button:hover,
+.bookmark-button:focus-visible {
+  color: var(--accent);
+  background: var(--accent-light);
+  outline: none;
+}
+
+.bookmark-button.is-bookmarked {
+  color: var(--accent);
+}
+
+.bookmark-button.is-bookmarked svg {
+  fill: currentColor;
+}
+
 .empty-message, .loading-message, .error-message { color: var(--muted); line-height: 1.5; }
 
 .empty-message { margin: 20px 0 0; font-size: .95rem; }
