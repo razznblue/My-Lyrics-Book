@@ -117,11 +117,21 @@ async function loadSongs() {
 }
 
 /* Helper Functions */
+
+// Allow userto type plain words without neding to type ʼokina or kahakō to look for songs
+function normalizeForSearch(text) {
+  return String(text)
+    .toLowerCase()
+    .replace(/[ʻʼ'`]/g, '')       // strip okina and apostrophe-like marks
+    .normalize('NFD')              // decompose accented letters (ā → a + combining macron)
+    .replace(/[\u0300-\u036f]/g, ''); // strip the combining marks, leaving plain vowels
+}
+
 function renderContents() {
   const query = searchInput.value.trim().toLowerCase();
   const matches = songs
     .map((song, index) => ({ song, index }))
-    .filter(({ song }) => String(song.title).toLowerCase().includes(query))
+    .filter(({ song }) => normalizeForSearch(song.title).includes(normalizeForSearch(query)))
     .filter(({ song }) => genreFilter.value === 'all' || String(song.genre || '') === genreFilter.value);
 
   if (sortSongs.value === 'az' || sortSongs.value === 'za') {
@@ -176,7 +186,7 @@ function getMatchingSongs() {
   const query = searchInput.value.trim().toLowerCase();
   return songs
     .map((song, index) => ({ song, index }))
-    .filter(({ song }) => String(song.title).toLowerCase().includes(query))
+    .filter(({ song }) => normalizeForSearch(song.title).includes(normalizeForSearch(query)))
     .filter(({ song }) => genreFilter.value === 'all' || String(song.genre || '') === genreFilter.value);
 }
 
