@@ -1,12 +1,14 @@
 TODO:
+
+ - Go through existing songs and populate all chords/embeds/recordings
+ - Add all songs from He Mele Aloha book
+ - Add rest of songs on this doc
  - Home Page Content
   - Explanations
   - How to use
   - How to submit a song
   - How to contribute to project (add/edit features)
- - Add Design Overhaul
- - Add More Songs
- - Go through existing songs to add chord/audio/embeds
+ - Do Design Overhaul indesign-overhaul branch
 
 Songs to Add:
 
