@@ -1,6 +1,4 @@
 TODO:
- - A Oia not appearing at top of list.
- - Allow search to work tih okina and kahako markers
  - Home Page Content
   - Explanations
   - How to use

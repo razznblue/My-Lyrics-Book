@@ -127,6 +127,10 @@ function normalizeForSearch(text) {
     .replace(/[\u0300-\u036f]/g, ''); // strip the combining marks, leaving plain vowels
 }
 
+function startsWithOkina(text) {
+  return /^[ʻʼ'`]/.test(String(text).trim());
+}
+
 function renderContents() {
   const query = searchInput.value.trim().toLowerCase();
   const matches = songs
@@ -134,9 +138,32 @@ function renderContents() {
     .filter(({ song }) => normalizeForSearch(song.title).includes(normalizeForSearch(query)))
     .filter(({ song }) => genreFilter.value === 'all' || String(song.genre || '') === genreFilter.value);
 
+  // Song List: Sorts songs w/support for okina/kahako
   if (sortSongs.value === 'az' || sortSongs.value === 'za') {
     const direction = sortSongs.value === 'az' ? 1 : -1;
-    matches.sort((left, right) => direction * String(left.song.title).localeCompare(String(right.song.title)));
+    matches.sort((left, right) => {
+      const leftTitle = String(left.song.title);
+      const rightTitle = String(right.song.title);
+      const leftNorm = normalizeForSearch(leftTitle);
+      const rightNorm = normalizeForSearch(rightTitle);
+
+      // 1) Group by the actual first letter (ignore okina/kahako for now)
+      const leftBase = leftNorm.charAt(0);
+      const rightBase = rightNorm.charAt(0);
+      if (leftBase !== rightBase) return direction * leftBase.localeCompare(rightBase);
+
+      // 2) Within the same letter group, okina-leading titles come first
+      const leftOkina = startsWithOkina(leftTitle);
+      const rightOkina = startsWithOkina(rightTitle);
+      if (leftOkina !== rightOkina) return direction * (leftOkina ? -1 : 1);
+
+      // 3) Otherwise sort normally within that subgroup
+      const normCompare = leftNorm.localeCompare(rightNorm);
+      if (normCompare !== 0) return direction * normCompare;
+
+      // 4) Final tiebreak using the untouched original title (handles e.g. Alika vs Ālika)
+      return direction * leftTitle.localeCompare(rightTitle);
+    });
   }
 
   // Bookmarked songs float to the top, preserving order within each group
