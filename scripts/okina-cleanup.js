@@ -6,6 +6,9 @@ const path = require('path');
 an okina (ʻ) for proper olelo Hawaiʻi writing.
 */
 
+// Defaults to checking songs.json, but you can specify a different file as a command line argument
+// example: node scripts/scan-songs.js my-songs.json
+
 // Path to the input file
 const inputPath = process.argv[2] || 'songs.json';
 const outputPath = process.argv[3] || 'songs.updated.json';

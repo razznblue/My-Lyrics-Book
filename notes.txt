@@ -1,5 +1,4 @@
 TODO:
-
  - Go through existing songs and populate all chords/embeds/recordings
  - Add all songs from He Mele Aloha book
  - Add rest of songs on this doc
@@ -36,8 +35,14 @@ Misery's End
 Starting All Over again
 I Want You To Know - Kekai Boys
 Sand In My Boots
-On In A Million You Da Nuuanu Brothers
+One In A Million You Da Nuuanu Brothers
+He'e Roa
+Ehu Girl
+Butterflies
+Lover Girl
 
+Haleakala
+Kuu Lei Pua Kenikeni
 Ha'iha'i pua lehua
 Ku'u lei hoku
 Adios Ke Aloha
@@ -62,9 +67,24 @@ e ike i ka nani ao poliahu
 kuu pua aloha - waipuna
 'Akahi No A Hele Pu
 Ka Manu - Dennis Pavao
-He'e Roa
-Ehu Girl
-Butterflies
-Lover Girl
+Kipu kai - island of kauai
+Nani Lawa'I
+punaluu
+hilo hula
+Nani manoa
+Mokuleia
+Hula o Make'E
+E hoi mai e pili
+E Welo mau loa kuu hae hawaii
+Na Kupa O Waianae
 
-
+Ka Maluhia
+Mele No Popoalaea
+Wahiawa Town
+By The Ocean
+Fifty Shades of Green
+Next To A River
+Pu'uloa
+Eo Hawai'i
+Hawai'i Unity
+Only Time Will Tell
