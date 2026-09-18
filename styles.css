@@ -63,6 +63,10 @@ button, input { font: inherit; }
 
 .header-actions { display: flex; align-items: center; gap: 8px; }
 
+#main-title {
+  cursor: pointer;
+}
+
 .brand {
   color: var(--ink);
   font-size: 1.15rem;
@@ -72,6 +76,7 @@ button, input { font: inherit; }
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  margin-bottom: 0;
 }
 
 .converter-button { padding: 8px 10px; border: 1px solid var(--line); border-radius: 3px; color: var(--accent); background: var(--paper); font-family: monospace; font-size: .85rem; cursor: pointer; }
@@ -230,6 +235,121 @@ h2 { margin-bottom: 0; font-size: 1.25rem; font-weight: normal; }
   overflow: hidden;
 }
 
+/* Reusable side menu component */
+.menu-button {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 34px;
+  height: 34px;
+  padding: 0;
+  border: 1px solid var(--line);
+  border-radius: 5px;
+  color: var(--ink);
+  background: var(--paper);
+  cursor: pointer;
+}
+
+.menu-button:hover, .menu-button:focus-visible {
+  border-color: var(--accent);
+  color: var(--accent);
+  outline: none;
+}
+
+.menu-panel {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.menu-panel-heading { display: none; }
+
+.side-menu-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(32, 36, 38, .4);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .25s ease;
+  z-index: 40;
+}
+
+.side-menu-overlay.is-open {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+body.side-menu-locked { overflow: hidden; }
+
+@media (max-width: 720px) {
+  .menu-button { display: inline-flex; }
+
+  .menu-panel {
+    position: fixed;
+    top: 0;
+    right: 0;
+    z-index: 50;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 12px;
+    width: min(78vw, 300px);
+    height: 100%;
+    margin: 0;
+    padding: 20px 20px 28px;
+    border-left: 1px solid var(--line);
+    background: var(--paper);
+    box-shadow: -10px 0 32px rgba(32, 36, 38, .2);
+    transform: translateX(100%);
+    transition: transform .28s ease;
+    overflow-y: auto;
+  }
+
+  .menu-panel.is-open { transform: translateX(0); }
+
+  .menu-panel-heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 6px;
+    padding-bottom: 14px;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .menu-panel-title {
+    font-family: 'Inter', 'Trebuchet MS', sans-serif;
+    font-size: .8rem;
+    font-weight: 600;
+    color: var(--ink);
+  }
+
+  .menu-panel-close {
+    width: 28px;
+    height: 28px;
+    padding: 0;
+    border: 0;
+    color: var(--muted);
+    background: transparent;
+    font-size: 1.4rem;
+    line-height: 1;
+    cursor: pointer;
+  }
+
+  .menu-panel-close:hover, .menu-panel-close:focus-visible { color: var(--ink); outline: none; }
+
+  .menu-panel .converter-button,
+  .menu-panel .random-button,
+  .menu-panel .chords-toggle,
+  .menu-panel .audio-toggle {
+    width: 100%;
+    justify-content: flex-start;
+  }
+
+  .menu-panel .transpose-controls[hidden] { display: none; }
+  .menu-panel .transpose-controls:not([hidden]) { display: flex; }
+}
+
 .back-button {
   display: inline-flex;
   align-items: center;
@@ -265,22 +385,6 @@ h2 { margin-bottom: 0; font-size: 1.25rem; font-weight: normal; }
   display: inline-block;
   line-height: 1;
   text-align: center;
-}
-
-@media (max-width: 640px) {
-  .lyrics-toolbar {
-    flex-wrap: nowrap;
-    justify-content: flex-start;
-    gap: 8px;
-  }
-  .song-tools {
-    flex-direction: column;
-    align-items: flex-start;
-    justify-content: flex-start;
-    flex-wrap: wrap;
-    overflow: visible;
-    row-gap: 8px;
-  }
 }
 
 .back-button:hover, .back-button:focus-visible { border-color: var(--accent); color: var(--accent); outline: none; }
@@ -500,29 +604,6 @@ h2 { margin-bottom: 0; font-size: 1.25rem; font-weight: normal; }
 
 body.landing-mode .book-layout { display: none; }
 body.landing-mode .header-actions { display: none; }
-
-.back-to-landing-button {
-  display: none;
-  padding: 8px 10px;
-  border: 1px solid var(--line);
-  border-radius: 3px;
-  color: var(--accent);
-  background: var(--paper);
-  font-family: 'Trebuchet MS', sans-serif;
-  font-size: .72rem;
-  font-weight: bold;
-  letter-spacing: .04em;
-  cursor: pointer;
-}
-
-.back-to-landing-button:hover,
-.back-to-landing-button:focus-visible {
-  border-color: var(--accent);
-  background: var(--accent-light);
-  outline: none;
-}
-
-body:not(.landing-mode) .back-to-landing-button { display: inline-block; }
 
 .landing-copy {
   max-width: 42rem;

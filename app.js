@@ -1,6 +1,6 @@
 /* DOM Selectors */
 const openBookButton = document.querySelector('#open-book');
-const backToLandingButton = document.querySelector('#back-to-landing');
+const mainTitle = document.querySelector('#main-title');
 const songList = document.querySelector('#song-list');
 const lyricsContent = document.querySelector('#lyrics-content');
 const searchInput = document.querySelector('#song-search');
@@ -29,6 +29,14 @@ const transposeDownButton = document.querySelector('#transpose-down');
 const transposeUpButton = document.querySelector('#transpose-up');
 const transposeStatus = document.querySelector('#transpose-status');
 const showAudioCheckbox = document.querySelector('#show-audio');
+const menuButton = document.querySelector('#menu-button');
+const headerMenuPanel = document.querySelector('#header-menu-panel');
+const headerMenuOverlay = document.querySelector('#header-menu-overlay');
+const headerMenuClose = document.querySelector('#header-menu-close');
+const songMenuButton = document.querySelector('#song-menu-button');
+const songMenuPanel = document.querySelector('#song-menu-panel');
+const songMenuOverlay = document.querySelector('#song-menu-overlay');
+const songMenuClose = document.querySelector('#song-menu-close');
 
 /* Load in and populate config values */
 document.title = window.APP_NAME || 'Puke Mele';
@@ -202,6 +210,59 @@ function renderContents() {
   songCount.textContent = `${matches.length} ${matches.length === 1 ? 'song' : 'songs'}`;
   emptySearch.hidden = matches.length > 0;
 }
+
+/* Side Menu */
+function setupSideMenu({ toggleButton, panel, overlay, closeButton }) {
+  if (!toggleButton || !panel || !overlay) return null;
+
+  function open() {
+    overlay.hidden = false;
+    requestAnimationFrame(() => {
+      panel.classList.add('is-open');
+      overlay.classList.add('is-open');
+    });
+    toggleButton.setAttribute('aria-expanded', 'true');
+    document.body.classList.add('side-menu-locked');
+  }
+
+  function close() {
+    panel.classList.remove('is-open');
+    overlay.classList.remove('is-open');
+    toggleButton.setAttribute('aria-expanded', 'false');
+    document.body.classList.remove('side-menu-locked');
+    window.setTimeout(() => {
+      if (!panel.classList.contains('is-open')) overlay.hidden = true;
+    }, 300);
+  }
+
+  function toggle() {
+    panel.classList.contains('is-open') ? close() : open();
+  }
+
+  toggleButton.addEventListener('click', toggle);
+  overlay.addEventListener('click', close);
+  if (closeButton) closeButton.addEventListener('click', close);
+
+  document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape' && panel.classList.contains('is-open')) close();
+  });
+
+  return { open, close, toggle };
+}
+
+const headerSideMenu = setupSideMenu({
+  toggleButton: menuButton,
+  panel: headerMenuPanel,
+  overlay: headerMenuOverlay,
+  closeButton: headerMenuClose,
+});
+
+const songSideMenu = setupSideMenu({
+  toggleButton: songMenuButton,
+  panel: songMenuPanel,
+  overlay: songMenuOverlay,
+  closeButton: songMenuClose,
+});
 
 function populateGenreFilter() {
   const genres = [...new Set(songs.map(song => String(song.genre || '').trim()).filter(Boolean))]
@@ -532,18 +593,18 @@ function showMessage(message, isError = false) {
 }
 
 /* Event Listeners */
+if (mainTitle) {
+  mainTitle.addEventListener('click', () => {
+    document.body.classList.remove('home-mode');
+    document.body.classList.add('landing-mode');
+    localStorage.removeItem('lyrics-book-opened');
+  })
+}
 if (openBookButton) {
   openBookButton.addEventListener('click', () => {
     document.body.classList.remove('landing-mode');
     document.body.classList.add('home-mode');
     localStorage.setItem('lyrics-book-opened', 'true');
-  });
-}
-if (backToLandingButton) {
-  backToLandingButton.addEventListener('click', () => {
-    document.body.classList.remove('home-mode');
-    document.body.classList.add('landing-mode');
-    localStorage.removeItem('lyrics-book-opened');
   });
 }
 searchInput.addEventListener('input', renderContents);
