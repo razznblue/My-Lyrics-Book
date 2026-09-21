@@ -95,41 +95,44 @@
               <span class="back-label">BACK</span>
             </div>
 
-            <button id="song-menu-button" class="menu-button" type="button" aria-label="Open song options" aria-expanded="false" aria-controls="song-menu-panel">
+            <button id="song-tools-toggle" class="song-tools-toggle" type="button" aria-label="Show song options" aria-expanded="false" aria-controls="song-tools-panel">
               <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
-                <line x1="3" y1="6" x2="21" y2="6"></line>
-                <line x1="3" y1="12" x2="21" y2="12"></line>
-                <line x1="3" y1="18" x2="21" y2="18"></line>
+                <line x1="4" y1="7" x2="20" y2="7"></line>
+                <circle cx="9" cy="7" r="2.2" fill="var(--paper)"></circle>
+                <line x1="4" y1="12" x2="20" y2="12"></line>
+                <circle cx="15" cy="12" r="2.2" fill="var(--paper)"></circle>
+                <line x1="4" y1="17" x2="20" y2="17"></line>
+                <circle cx="9" cy="17" r="2.2" fill="var(--paper)"></circle>
               </svg>
             </button>
-
-            <div id="song-menu-panel" class="menu-panel">
-              <div class="menu-panel-heading">
-                <span class="menu-panel-title">Song options</span>
-                <button id="song-menu-close" class="menu-panel-close" type="button" aria-label="Close menu">×</button>
-              </div>
-              <label class="chords-toggle" title="Show chords">
-                <input id="show-chords" type="checkbox">
-                <span>Show chords</span>
-              </label>
-              <div id="transpose-controls" class="transpose-controls" hidden aria-label="Transpose chords">
-                <button id="transpose-down" class="transpose-button" type="button" aria-label="Transpose down" title="Transpose down">−</button>
-                <span id="transpose-status" aria-live="polite">Original key</span>
-                <button id="transpose-up" class="transpose-button" type="button" aria-label="Transpose up" title="Transpose up">+</button>
-              </div>
-              <label class="audio-toggle" title="Show audio player">
-                <input id="show-audio" type="checkbox">
-                <span>Audio</span>
-              </label>
-            </div>
           </div>
-          <div id="song-menu-overlay" class="side-menu-overlay" hidden></div>
         </div>
+
+        <div id="song-tools-panel" class="song-tools-panel">
+          <div class="song-tools-panel-inner">
+            <label class="chords-toggle" title="Show chords">
+              <input id="show-chords" type="checkbox">
+              <span>Show chords</span>
+            </label>
+
+            <div id="transpose-controls" class="transpose-controls" hidden aria-label="Transpose chords">
+              <button id="transpose-down" class="transpose-button" type="button" aria-label="Transpose down" title="Transpose down">−</button>
+              <span id="transpose-status" aria-live="polite">Original key</span>
+              <button id="transpose-up" class="transpose-button" type="button" aria-label="Transpose up" title="Transpose up">+</button>
+            </div>
+
+            <label class="audio-toggle" title="Show audio player">
+              <input id="show-audio" type="checkbox">
+              <span>Audio</span>
+            </label>
+          </div>
+        </div>
+
         <div id="lyrics-content" class="lyrics-content" aria-live="polite">
           <p class="loading-message">Loading your songs...</p>
         </div>
         <audio id="song-audio" class="song-audio" controls></audio>
-      </article>
+      </article>  
     </div>
   </main>
 

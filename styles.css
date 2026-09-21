@@ -286,10 +286,6 @@ body.side-menu-locked { overflow: hidden; }
 
   .menu-button { display: inline-flex; }
 
-  .song-tools {
-    width: 100%;
-  }
-
   #song-menu-button {
     margin-left: auto;
   }
@@ -400,10 +396,59 @@ body.side-menu-locked { overflow: hidden; }
 
 .song-tools {
   display: flex;
+  align-items: center;
   gap: 14px;
   min-width: 0;
   flex-shrink: 1;
   overflow: hidden;
+}
+
+.song-tools-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 34px;
+  height: 34px;
+  padding: 0;
+  border: 1px solid var(--line);
+  border-radius: 5px;
+  color: var(--ink);
+  background: var(--paper);
+  cursor: pointer;
+  transition: border-color .15s ease, color .15s ease, background .15s ease;
+}
+
+.song-tools-toggle:hover, .song-tools-toggle:focus-visible {
+  border-color: var(--accent);
+  color: var(--accent);
+  outline: none;
+}
+
+.song-tools-toggle.is-active {
+  border-color: var(--accent);
+  color: var(--accent);
+  background: var(--accent-light);
+}
+
+.song-tools-panel {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows .3s ease;
+}
+
+.song-tools-panel.is-open {
+  grid-template-rows: 1fr;
+}
+
+.song-tools-panel-inner {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 16px;
+  padding-top: 16px;
+  overflow: hidden;
+  min-height: 0;
 }
 
 .chords-toggle, .audio-toggle {
