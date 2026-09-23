@@ -748,6 +748,7 @@ body.side-menu-locked { overflow: hidden; }
 
 .primary-action:hover, .primary-action:focus-visible { color: white; background: #174d46; }
 
+/* Control elements shown in landing-mode */
 body.landing-mode .book-layout { display: none; }
 body.landing-mode .header-actions { display: none; }
 
@@ -780,9 +781,12 @@ body.landing-mode .header-actions { display: none; }
   outline: none;
 }
 
+/* Control elements shown on home-mode */
 body.home-mode .lyrics-panel { display: none; }
+body.home-mode .site-footer { display: none; }
 
 body.home-mode .book-layout { grid-template-columns: minmax(220px, 520px); }
+
 
 body.reading-mode { overflow-y: auto; }
 
