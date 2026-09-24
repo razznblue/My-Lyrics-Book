@@ -671,6 +671,13 @@
     "chords": "       G    C        G\nʻO Kalapana, kai leo nui\n  G             D7\nUa lono ka uka o Hōlei,\n  G          G7    C  \nHe uwā lā Kalapana, ē,\nG                       C\nKuli wale, kuli wale i ka leo,\n  G   D7    G\nHe leo no ke kai, ē."
   },
   {
+    "title": "Holo Waʻa Pā",
+    "genre": "Hawaiian",
+    "lyrics": "Kāua i ka holo waʻa pā\nLawe mālie ka lima i ka hoe\nI mua a i hope paʻa ke kūlana\nMea ʻole nā ʻale i ka luli mālie\n \nKō mai ʻoe a kāmau i ka hoe\nKohu manu ʻiwa i ka piʻi imua\nKohu Mine kuʻu lio holo nui\nKūpaianaha ē ka hana a nā ʻale\n \nHō aʻe ka ihu i ka makani\nNowiki, noweke, kauweke\nKa hana ia lā o ka moku\nPorthard mai ʻoe i ka hoe\n \nHaʻina ʻia mai ka puana\nLawe mālie ka lima i ka hoe\nImua a i hope paʻa ke kūlana\nMea ʻole nā ʻale i ka luli mālie.",
+    "embed": "<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/-cH0xlT6mMA?si=oTfgKJ9ysVKFvqT5\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen></iframe>",
+    "chords": "[Vamp]\nA7 D7 G\n \n  G         D7    G\nKāua i ka holo waʻa pā\n           D7       G    G7\nLawe mālie ka lima i ka hoe\n  C        E7        A7\nI mua a i hope paʻa ke kūlana\n     G          D7         G\nMea ʻole nā ʻale i ka luli mālie\n \nG            D7      G\nKō mai ʻoe a kāmau i ka hoe\n               D7          G   G7\nKohu manu ʻiwa i ka piʻi imua\nC              E7        A7\nKohu Mine kuʻu lio holo nui\n    G           D7             G\nKūpaianaha ē ka hana a nā ʻale\n \n    G          D7     G\nHō aʻe ka ihu i ka makani\n          D7        G   G7\nNowiki, noweke, kauweke\n    C       E7       A7\nKa hana ia lā o ka moku\n   G         D7        G\nPorthard mai ʻoe i ka hoe\n \n   G       D7       G\nHaʻina ʻia mai ka puana\n             D7         G      G7\nLawe mālie ka lima i ka hoe\n C       E7          A7\nImua a i hope paʻa ke kūlana\n    G                D7       G\nMea ʻole nā ʻale i ka luli mālie."
+  },
+  {
     "title": "Holoholo Kaʻa",
     "genre": "Hawaiian",
     "lyrics": "Kāua i ka holoholo kaʻa\nʻOni ana ka huila lawe a lilo\nKuʻu aku ʻoe a pau pono\nNā huahelu e kau ana\n\nʻAlawa iho ʻoe ma ka ʻaoʻao\nHū ana ka makani hele uluulu\nMea ʻole ka piʻina me ka ihona\nMe nā kīkeʻe alanui\n\nʻO ka pā kōnane a ka mahina\nAhuwale nō i ka pae ʻōpua\nEia kāua i ka piʻina pau\nA huli hoʻi mai kāua\n\nHe manaʻo koʻu i ke kani koʻele\nUa haki ka pilina aʻo luna iho\nHe laʻi pono ke kaunu ʻana\nHe nanea mai hoʻi kau\n\nHaʻina kō wehi e kuʻu lei\nKe huli hoʻi nei kāua\nHoni aku ʻoe i ka ʻailea\nKe ʻoni nei ka huila",
@@ -1798,6 +1805,12 @@
     "title": "Ulupalakua",
     "genre": "Hawaiian",
     "lyrics": "Kaulana mai nei\nAʻo ʻUlupalakua\nE ʻīnikiniki ahiahi\nKa home aʻo paniolo\n\nE wehi e kuʻu lei\nAʻo ʻUlupalakua\nʻOnaona me ka ʻawapuhi\nHe nani maʻoli nō\n\nHaʻina mai ka puana\nAʻo ʻUlupalakua\nH ʻīnikiniki ahiahi\nKa home aʻo paniolo"
+  },
+  {
+    "title": "Uluwehi o Kaʻala",
+    "genre": "Hawaiian",
+    "lyrics": "Uluwehi ka luna o Kaʻala\nKāhiko ʻia mai la e ka ʻohu\nʻAlawa kuʻu maka i luna\nKa piʻo a ke ānuenue\nAlawa kuʻu maka i lalo\nKa hulali a ka wai liʻula\nʻAuwana i ke kula o Leilehua\nMe ka ipo honehone o ke aumoe\n\n[Hui]\nPā mai ka makani he Moaʻe\nHōʻinoʻino nei i ka manaʻo\nI laila māua i pili ai\nMe ka ipo honehone o ke aumoe\n\nHoʻohihi aku au e ʻike\nI ka wai aniani o uka\nʻOia wai one a ka manu\nKaomi ana i ka manaʻo\nO ke ahe mai a ke kēhau\nHali mai ke ʻala onaona\nOlu laʻi ka walea ʻana iho\nMa ka poli nahenahe o kuʻu ipo\n",
+    "embed": "<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/Rwxd2I-esX0?si=NVi4NJuJosNZ7HVY\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen></iframe>"
   },
   {
     "title": "Uwehe, 'Ami and Slide",
