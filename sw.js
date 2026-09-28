@@ -1,4 +1,4 @@
-const CACHE_NAME = 'puke-mele-v51';
+const CACHE_NAME = 'puke-mele-v52';
 
 const CORE_ASSETS = [
   '/',
