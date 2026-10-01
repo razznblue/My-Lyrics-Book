@@ -57,8 +57,11 @@
     <div class="book-layout"> 
       <aside class="contents-panel" aria-labelledby="contents-title">
         <div class="panel-heading">
-          <h2 id="contents-title">Song List(Nā Mele)</h2>
-          <button id="song-list-toggle" class="song-list-toggle" type="button" aria-expanded="false" aria-controls="song-list">Show All Songs</button>
+          <h2 id="contents-title">Song List</h2>
+          <div class="catalog-actions">
+            <button id="song-list-toggle" class="song-list-toggle" type="button" aria-expanded="false" aria-controls="song-list">Show All Songs</button>
+            <button id="random-song-list" class="random-button" type="button">Random song</button>
+          </div>
         </div>
         <div class="contents-search">
           <label class="search-label" for="song-search">Search songs</label>
@@ -71,13 +74,13 @@
               <option value="all">All genres</option>
             </select>
           </div>
-          <div>
-            <label class="search-label" for="sort-songs">Sort</label>
-            <select id="sort-songs" class="select-input">
-              <option value="az">A to Z</option>
-              <option value="za">Z to A</option>
-              <option value="default">Original order</option>
-            </select>
+          <div class="collection-filter" id="collection-filter" role="group" aria-label="Filter by saved status">
+            <span class="search-label">Saved</span>
+            <div class="collection-filter-options">
+              <button class="collection-filter-button" type="button" data-collection-filter="all" aria-pressed="true">All</button>
+              <button class="collection-filter-button" type="button" data-collection-filter="liked" aria-pressed="false">Liked</button>
+              <button class="collection-filter-button" type="button" data-collection-filter="bookmarked" aria-pressed="false">Bookmarked</button>
+            </div>
           </div>
         </div>
         <nav aria-label="Song titles">
@@ -96,6 +99,7 @@
               </svg>
               <span class="back-label">BACK</span>
             </div>
+            <button id="random-song-toolbar" class="random-button random-button-inline" type="button" hidden>New random song</button>
 
           </div>
         </div>

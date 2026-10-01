@@ -6,10 +6,11 @@ const songList = document.querySelector('#song-list');
 const lyricsContent = document.querySelector('#lyrics-content');
 const searchInput = document.querySelector('#song-search');
 const genreFilter = document.querySelector('#genre-filter');
-const sortSongs = document.querySelector('#sort-songs');
 const emptySearch = document.querySelector('#empty-search');
 const songListToggle = document.querySelector('#song-list-toggle');
+const collectionFilter = document.querySelector('#collection-filter');
 const randomSongButton = document.querySelector('#random-song');
+const randomSongListButton = document.querySelector('#random-song-list');
 const randomSongToolbarButton = document.querySelector('#random-song-toolbar');
 const backButton = document.querySelector('#back-button');
 const converterButton = document.querySelector('#converter-button');
@@ -62,11 +63,15 @@ let songs = [];
 let selectedIndex = 0;
 let transposeSteps = 0;
 let songEmbed = null;
+let activeRandomDepth = 0;
 const savedGenre = localStorage.getItem('lyrics-book-genre') || 'all';
-const savedSort = localStorage.getItem('lyrics-book-sort') || 'az';
 const contentsScrollKey = 'lyrics-book-contents-scroll';
 const songListVisibilityKey = 'lyrics-book-show-songs';
 let areSongsVisible = localStorage.getItem(songListVisibilityKey) === 'true';
+const collectionFilterKey = 'lyrics-book-collection-filter';
+const collectionFilterOptions = ['all', 'liked', 'bookmarked'];
+let activeCollectionFilter = localStorage.getItem(collectionFilterKey) || 'all';
+if (!collectionFilterOptions.includes(activeCollectionFilter)) activeCollectionFilter = 'all';
 const appHistoryKey = 'puke-mele';
 
 /* LocalStorage to support save page state */
@@ -77,9 +82,14 @@ if (localStorage.getItem('lyrics-book-opened') === 'true') {
 
 /* Bookmark Song Support */
 const bookmarkedTitles = new Set(JSON.parse(localStorage.getItem('lyrics-book-bookmarks') || '[]'));
+const likedTitles = new Set(JSON.parse(localStorage.getItem('lyrics-book-likes') || '[]'));
 
 function isBookmarked(song) {
   return bookmarkedTitles.has(song.title);
+}
+
+function isLiked(song) {
+  return likedTitles.has(song.title);
 }
 
 function toggleBookmark(song) {
@@ -91,7 +101,17 @@ function toggleBookmark(song) {
   localStorage.setItem('lyrics-book-bookmarks', JSON.stringify([...bookmarkedTitles]));
 }
 
+function toggleLike(song) {
+  if (likedTitles.has(song.title)) {
+    likedTitles.delete(song.title);
+  } else {
+    likedTitles.add(song.title);
+  }
+  localStorage.setItem('lyrics-book-likes', JSON.stringify([...likedTitles]));
+}
+
 const bookmarkIconSvg = `<svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M6 3.5C6 2.67 6.67 2 7.5 2h9c.83 0 1.5.67 1.5 1.5v18l-6-4.2-6 4.2v-18z"/></svg>`;
+const likeIconSvg = `<svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1.1-1.1a5.5 5.5 0 0 0-7.8 7.8l1.1 1.1L12 21l7.8-7.5 1.1-1.1a5.5 5.5 0 0 0-.1-7.8Z"/></svg>`;
 
 /* Register Service Worker for offline capabilities */
 if ('serviceWorker' in navigator) {
@@ -116,7 +136,6 @@ async function loadSongs() {
     songs = results.flat();
     populateGenreFilter();
     genreFilter.value = [...genreFilter.options].some(option => option.value === savedGenre) ? savedGenre : 'all';
-    sortSongs.value = savedSort === 'default' ? 'az' : (['az', 'za'].includes(savedSort) ? savedSort : 'az');
     renderContents();
     if (!songs.length) showMessage('No songs yet. Add a song object to songs.json.');
 
@@ -151,12 +170,14 @@ function renderContents() {
   const matches = songs
     .map((song, index) => ({ song, index }))
     .filter(({ song }) => normalizeForSearch(song.title).includes(normalizeForSearch(query)))
-    .filter(({ song }) => genreFilter.value === 'all' || String(song.genre || '') === genreFilter.value);
+    .filter(({ song }) => genreFilter.value === 'all' || String(song.genre || '') === genreFilter.value)
+    .filter(({ song }) => activeCollectionFilter === 'all'
+      || (activeCollectionFilter === 'liked' && isLiked(song))
+      || (activeCollectionFilter === 'bookmarked' && isBookmarked(song)));
 
-  // Song List: Sorts songs w/support for okina/kahako
-  if (sortSongs.value === 'az' || sortSongs.value === 'za') {
-    const direction = sortSongs.value === 'az' ? 1 : -1;
-    matches.sort((left, right) => {
+  // Keep songs alphabetized while supporting okina and kahakō.
+  const direction = 1;
+  matches.sort((left, right) => {
       const leftTitle = String(left.song.title);
       const rightTitle = String(right.song.title);
       const leftNorm = normalizeForSearch(leftTitle);
@@ -178,8 +199,7 @@ function renderContents() {
 
       // 4) Final tiebreak using the untouched original title (handles e.g. Alika vs Ālika)
       return direction * leftTitle.localeCompare(rightTitle);
-    });
-  }
+  });
 
   // Bookmarked songs float to the top, preserving order within each group
   matches.sort((left, right) => Number(isBookmarked(right.song)) - Number(isBookmarked(left.song)));
@@ -198,6 +218,19 @@ function renderContents() {
       navigateToAppView('song', index);
     });
 
+    const liked = isLiked(song);
+    const likeButton = document.createElement('button');
+    likeButton.className = 'like-button';
+    likeButton.type = 'button';
+    likeButton.classList.toggle('is-liked', liked);
+    likeButton.setAttribute('aria-label', liked ? `Unlike ${song.title}` : `Like ${song.title}`);
+    likeButton.setAttribute('aria-pressed', String(liked));
+    likeButton.innerHTML = likeIconSvg;
+    likeButton.addEventListener('click', () => {
+      toggleLike(song);
+      renderContents();
+    });
+
     const bookmarked = isBookmarked(song);
     const bookmarkButton = document.createElement('button');
     bookmarkButton.className = 'bookmark-button';
@@ -210,7 +243,7 @@ function renderContents() {
       renderContents();
     });
 
-    item.append(button, bookmarkButton);
+    item.append(button, likeButton, bookmarkButton);
     return item;
   }));
 
@@ -222,6 +255,12 @@ function updateSongListVisibility() {
   songListToggle.textContent = areSongsVisible ? 'Hide Songs' : 'Show All Songs';
   songListToggle.setAttribute('aria-expanded', String(areSongsVisible));
   emptySearch.hidden = !areSongsVisible || songList.children.length > 0;
+}
+
+function updateCollectionFilterButtons() {
+  collectionFilter.querySelectorAll('[data-collection-filter]').forEach(button => {
+    button.setAttribute('aria-pressed', String(button.dataset.collectionFilter === activeCollectionFilter));
+  });
 }
 
 /* Side Menu */
@@ -291,12 +330,15 @@ function getMatchingSongs() {
     .filter(({ song }) => genreFilter.value === 'all' || String(song.genre || '') === genreFilter.value);
 }
 
-function openRandomSong() {
-  const matches = getMatchingSongs();
+function openRandomSong({ cycle = false } = {}) {
+  let matches = getMatchingSongs();
   if (!matches.length) return;
+  if (cycle && matches.length > 1) {
+    matches = matches.filter(({ index }) => index !== selectedIndex);
+  }
   const randomMatch = matches[Math.floor(Math.random() * matches.length)];
   saveContentsScroll();
-  navigateToAppView('song', randomMatch.index);
+  navigateToAppView('song', randomMatch.index, { random: true });
 }
 
 function saveContentsScroll() {
@@ -314,21 +356,38 @@ function restoreContentsScroll(scrollTop) {
   });
 }
 
-function navigateToAppView(view, songIndex) {
+function navigateToAppView(view, songIndex, { random = false } = {}) {
   const currentState = history.state;
+  const isRandomSong = view === 'song' && random;
   if (currentState?.app === appHistoryKey
     && currentState.view === view
-    && (view !== 'song' || currentState.songIndex === songIndex)) return;
+    && (view !== 'song' || (currentState.songIndex === songIndex && Boolean(currentState.random) === isRandomSong))) return;
 
   if (currentState?.app === appHistoryKey && currentState.view === 'home') saveContentsScroll();
   const nextState = { app: appHistoryKey, view };
-  if (view === 'song') nextState.songIndex = songIndex;
+  if (view === 'song') {
+    nextState.songIndex = songIndex;
+    if (isRandomSong) {
+      nextState.random = true;
+      nextState.randomDepth = currentState?.random
+        ? (currentState.randomDepth || 1) + 1
+        : 1;
+    }
+  }
   if (view === 'home') nextState.scrollTop = 0;
   history.pushState(nextState, '', location.href);
   renderAppView(nextState);
 }
 
-function renderAppView(state) {
+function renderAppView(state, isPopState = false) {
+  const randomDepth = state.view === 'song' && state.random ? state.randomDepth || 1 : 0;
+  if (isPopState && randomDepth > 0 && randomDepth < activeRandomDepth) {
+    activeRandomDepth = randomDepth;
+    history.go(-randomDepth);
+    return;
+  }
+  activeRandomDepth = randomDepth;
+
   if (state.view === 'landing') {
     songAudio.pause();
     songAudio.currentTime = 0;
@@ -350,7 +409,7 @@ function renderAppView(state) {
     return;
   }
 
-  if (state.view === 'song' && songs[state.songIndex]) showSong(state.songIndex);
+  if (state.view === 'song' && songs[state.songIndex]) showSong(state.songIndex, state.random === true);
 }
 
 function initializeAppHistory() {
@@ -359,9 +418,10 @@ function initializeAppHistory() {
   history.replaceState({ ...existingState, app: appHistoryKey, view, scrollTop: 0 }, '', location.href);
 }
 
-function showSong(index) {
+function showSong(index, isRandomSong = false) {
   const song = songs[index];
   if (!song) return;
+  randomSongToolbarButton.hidden = !isRandomSong;
   selectedIndex = index;
   localStorage.setItem('lyrics-book-current-song', index);
   document.body.classList.remove('home-mode', 'landing-mode');
@@ -573,7 +633,8 @@ function renderChordText(lyrics) {
 
 function showContents() {
   if (history.state?.app === appHistoryKey && history.state.view === 'song') {
-    history.back();
+    const randomDepth = history.state.random ? history.state.randomDepth || 1 : 1;
+    history.go(-randomDepth);
     return;
   }
   navigateToAppView('home');
@@ -671,16 +732,21 @@ songListToggle.addEventListener('click', () => {
   localStorage.setItem(songListVisibilityKey, String(areSongsVisible));
   updateSongListVisibility();
 });
+collectionFilter.addEventListener('click', (event) => {
+  const button = event.target.closest('[data-collection-filter]');
+  if (!button) return;
+  activeCollectionFilter = button.dataset.collectionFilter;
+  localStorage.setItem(collectionFilterKey, activeCollectionFilter);
+  updateCollectionFilterButtons();
+  renderContents();
+});
 genreFilter.addEventListener('change', () => {
   localStorage.setItem('lyrics-book-genre', genreFilter.value);
   renderContents();
 });
-sortSongs.addEventListener('change', () => {
-  localStorage.setItem('lyrics-book-sort', sortSongs.value);
-  renderContents();
-});
 if (randomSongButton) if (randomSongButton) randomSongButton.addEventListener('click', openRandomSong);
-if (randomSongToolbarButton) randomSongToolbarButton.addEventListener('click', openRandomSong);
+if (randomSongListButton) randomSongListButton.addEventListener('click', openRandomSong);
+if (randomSongToolbarButton) randomSongToolbarButton.addEventListener('click', () => openRandomSong({ cycle: true }));
 if (converterButton) converterButton.addEventListener('click', openConverter);
 closeConverter.addEventListener('click', closeConverterDialog);
 converterTitle.addEventListener('input', updateJsonOutput);
@@ -735,7 +801,7 @@ document.addEventListener('keydown', (event) => {
   if (event.key === 'Escape' && document.body.classList.contains('reading-mode')) showContents();
 });
 window.addEventListener('popstate', (event) => {
-  if (event.state?.app === appHistoryKey) renderAppView(event.state);
+  if (event.state?.app === appHistoryKey) renderAppView(event.state, true);
 });
 window.addEventListener('resize', () => {
   const lyrics = document.querySelector('.lyrics-text');
@@ -743,4 +809,5 @@ window.addEventListener('resize', () => {
 });
 
 initializeAppHistory();
+updateCollectionFilterButtons();
 loadSongs();
