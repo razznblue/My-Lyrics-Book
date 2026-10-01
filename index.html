@@ -59,7 +59,7 @@
         <div class="panel-heading">
           <h2 id="contents-title">Song List</h2>
           <div class="catalog-actions">
-            <button id="song-list-toggle" class="song-list-toggle" type="button" aria-expanded="false" aria-controls="song-list">Show All Songs</button>
+            <button id="song-list-toggle" class="song-list-toggle" type="button" aria-expanded="false" aria-controls="song-list">Show Songs</button>
             <button id="random-song-list" class="random-button" type="button">Random song</button>
           </div>
         </div>
@@ -77,9 +77,9 @@
           <div class="collection-filter" id="collection-filter" role="group" aria-label="Filter by saved status">
             <span class="search-label">Saved</span>
             <div class="collection-filter-options">
-              <button class="collection-filter-button" type="button" data-collection-filter="all" aria-pressed="true">All</button>
-              <button class="collection-filter-button" type="button" data-collection-filter="liked" aria-pressed="false">Liked</button>
-              <button class="collection-filter-button" type="button" data-collection-filter="bookmarked" aria-pressed="false">Bookmarked</button>
+              <button class="collection-filter-button" type="button" data-collection-filter="all" aria-label="Show all songs" title="All songs" aria-pressed="true">All</button>
+              <button class="collection-filter-button" type="button" data-collection-filter="liked" aria-label="Show liked songs" title="Liked songs" aria-pressed="false"><span class="collection-filter-text">Liked</span><svg class="collection-filter-icon" viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1.1-1.1a5.5 5.5 0 0 0-7.8 7.8l1.1 1.1L12 21l7.8-7.5 1.1-1.1a5.5 5.5 0 0 0-.1-7.8Z"/></svg></button>
+              <button class="collection-filter-button" type="button" data-collection-filter="bookmarked" aria-label="Show bookmarked songs" title="Bookmarked songs" aria-pressed="false"><span class="collection-filter-text">Bookmarked</span><svg class="collection-filter-icon" viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M6 3.5C6 2.67 6.67 2 7.5 2h9c.83 0 1.5.67 1.5 1.5v18l-6-4.2-6 4.2v-18z"/></svg></button>
             </div>
           </div>
         </div>
@@ -100,6 +100,12 @@
               <span class="back-label">BACK</span>
             </div>
             <button id="random-song-toolbar" class="random-button random-button-inline" type="button" hidden>New random song</button>
+            <button id="random-song-like" class="song-save-button like-button" type="button" aria-label="Like this song" title="Like this song" aria-pressed="false" hidden>
+              <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1.1-1.1a5.5 5.5 0 0 0-7.8 7.8l1.1 1.1L12 21l7.8-7.5 1.1-1.1a5.5 5.5 0 0 0-.1-7.8Z"/></svg>
+            </button>
+            <button id="random-song-bookmark" class="song-save-button bookmark-button" type="button" aria-label="Bookmark this song" title="Bookmark this song" aria-pressed="false" hidden>
+              <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M6 3.5C6 2.67 6.67 2 7.5 2h9c.83 0 1.5.67 1.5 1.5v18l-6-4.2-6 4.2v-18z"/></svg>
+            </button>
 
           </div>
         </div>

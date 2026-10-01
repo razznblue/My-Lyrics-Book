@@ -12,6 +12,8 @@ const collectionFilter = document.querySelector('#collection-filter');
 const randomSongButton = document.querySelector('#random-song');
 const randomSongListButton = document.querySelector('#random-song-list');
 const randomSongToolbarButton = document.querySelector('#random-song-toolbar');
+const randomSongLikeButton = document.querySelector('#random-song-like');
+const randomSongBookmarkButton = document.querySelector('#random-song-bookmark');
 const backButton = document.querySelector('#back-button');
 const converterButton = document.querySelector('#converter-button');
 const converterDialog = document.querySelector('#converter-dialog');
@@ -422,6 +424,9 @@ function showSong(index, isRandomSong = false) {
   const song = songs[index];
   if (!song) return;
   randomSongToolbarButton.hidden = !isRandomSong;
+  randomSongLikeButton.hidden = !isRandomSong;
+  randomSongBookmarkButton.hidden = !isRandomSong;
+  updateRandomSongSaveButtons(song);
   selectedIndex = index;
   localStorage.setItem('lyrics-book-current-song', index);
   document.body.classList.remove('home-mode', 'landing-mode');
@@ -479,6 +484,19 @@ function showSong(index, isRandomSong = false) {
   renderContents();
   document.body.classList.add('reading-mode');
   fitLyrics(lyrics);
+}
+
+function updateRandomSongSaveButtons(song) {
+  const liked = isLiked(song);
+  const bookmarked = isBookmarked(song);
+  randomSongLikeButton.classList.toggle('is-liked', liked);
+  randomSongLikeButton.setAttribute('aria-pressed', String(liked));
+  randomSongLikeButton.setAttribute('aria-label', liked ? `Unlike ${song.title}` : `Like ${song.title}`);
+  randomSongLikeButton.title = liked ? 'Unlike this song' : 'Like this song';
+  randomSongBookmarkButton.classList.toggle('is-bookmarked', bookmarked);
+  randomSongBookmarkButton.setAttribute('aria-pressed', String(bookmarked));
+  randomSongBookmarkButton.setAttribute('aria-label', bookmarked ? `Remove ${song.title} from bookmarks` : `Bookmark ${song.title}`);
+  randomSongBookmarkButton.title = bookmarked ? 'Remove bookmark' : 'Bookmark this song';
 }
 
 const flatNotes = ['C', 'Db', 'D', 'Eb', 'E', 'F', 'Gb', 'G', 'Ab', 'A', 'Bb', 'B'];
@@ -747,6 +765,20 @@ genreFilter.addEventListener('change', () => {
 if (randomSongButton) if (randomSongButton) randomSongButton.addEventListener('click', openRandomSong);
 if (randomSongListButton) randomSongListButton.addEventListener('click', openRandomSong);
 if (randomSongToolbarButton) randomSongToolbarButton.addEventListener('click', () => openRandomSong({ cycle: true }));
+randomSongLikeButton.addEventListener('click', () => {
+  const song = songs[selectedIndex];
+  if (!song) return;
+  toggleLike(song);
+  updateRandomSongSaveButtons(song);
+  renderContents();
+});
+randomSongBookmarkButton.addEventListener('click', () => {
+  const song = songs[selectedIndex];
+  if (!song) return;
+  toggleBookmark(song);
+  updateRandomSongSaveButtons(song);
+  renderContents();
+});
 if (converterButton) converterButton.addEventListener('click', openConverter);
 closeConverter.addEventListener('click', closeConverterDialog);
 converterTitle.addEventListener('input', updateJsonOutput);
