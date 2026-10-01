@@ -57,8 +57,8 @@
     <div class="book-layout"> 
       <aside class="contents-panel" aria-labelledby="contents-title">
         <div class="panel-heading">
-          <h2 id="contents-title">Song Book(Nā Mele)</h2>
-          <span class="song-count" aria-live="polite"></span>
+          <h2 id="contents-title">Song List(Nā Mele)</h2>
+          <button id="song-list-toggle" class="song-list-toggle" type="button" aria-expanded="false" aria-controls="song-list">Show All Songs</button>
         </div>
         <div class="contents-search">
           <label class="search-label" for="song-search">Search songs</label>
@@ -81,7 +81,7 @@
           </div>
         </div>
         <nav aria-label="Song titles">
-          <ul id="song-list" class="song-list"></ul>
+          <ul id="song-list" class="song-list" hidden></ul>
         </nav>
         <p id="empty-search" class="empty-message" hidden>No songs match your search.</p>
       </aside>

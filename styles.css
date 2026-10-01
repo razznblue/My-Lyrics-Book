@@ -145,7 +145,18 @@ h1 { margin-bottom: 8px; font-size: clamp(2.3rem, 5vw, 4.4rem); font-weight: nor
 
 h2 { margin-bottom: 0; font-size: 1.25rem; font-weight: normal; }
 
-.song-count { color: var(--muted); font-family: 'Trebuchet MS', sans-serif; font-size: .75rem; }
+.song-list-toggle {
+  border: 0;
+  color: var(--muted);
+  background: transparent;
+  font-family: 'Trebuchet MS', sans-serif;
+  font-size: .75rem;
+  cursor: pointer;
+}
+
+.song-list-toggle:hover, .song-list-toggle:focus-visible { color: var(--accent); outline: none; }
+
+.song-list[hidden] { display: none; }
 
 .search-label { display: block; margin-bottom: 7px; color: var(--muted); letter-spacing: .04em; }
 
@@ -890,14 +901,18 @@ body.home-mode .panel-heading h2 {
   font-size: 3rem;
 }
 
-body.home-mode .song-count {
+body.home-mode .song-list-toggle {
   padding: 7px 11px;
+  border: 0;
   border-radius: 2px;
   color: #173e35;
   background: #d9ed7a;
   font-size: .78rem;
   font-weight: bold;
 }
+
+body.home-mode .song-list-toggle:hover,
+body.home-mode .song-list-toggle:focus-visible { color: #173e35; background: #c8e160; outline: 2px solid #173e35; }
 
 body.home-mode .contents-search { grid-column: 1; }
 
@@ -932,6 +947,8 @@ body.home-mode .song-list {
   overflow: visible;
   border-top: 1px solid #cbd2c4;
 }
+
+body.home-mode .song-list[hidden] { display: none; }
 
 body.home-mode .song-list li {
   min-width: 0;

@@ -8,7 +8,7 @@ const searchInput = document.querySelector('#song-search');
 const genreFilter = document.querySelector('#genre-filter');
 const sortSongs = document.querySelector('#sort-songs');
 const emptySearch = document.querySelector('#empty-search');
-const songCount = document.querySelector('.song-count');
+const songListToggle = document.querySelector('#song-list-toggle');
 const randomSongButton = document.querySelector('#random-song');
 const randomSongToolbarButton = document.querySelector('#random-song-toolbar');
 const backButton = document.querySelector('#back-button');
@@ -65,6 +65,8 @@ let songEmbed = null;
 const savedGenre = localStorage.getItem('lyrics-book-genre') || 'all';
 const savedSort = localStorage.getItem('lyrics-book-sort') || 'az';
 const contentsScrollKey = 'lyrics-book-contents-scroll';
+const songListVisibilityKey = 'lyrics-book-show-songs';
+let areSongsVisible = localStorage.getItem(songListVisibilityKey) === 'true';
 const appHistoryKey = 'puke-mele';
 
 /* LocalStorage to support save page state */
@@ -212,8 +214,14 @@ function renderContents() {
     return item;
   }));
 
-  songCount.textContent = `${matches.length} ${matches.length === 1 ? 'song' : 'songs'}`;
-  emptySearch.hidden = matches.length > 0;
+  updateSongListVisibility();
+}
+
+function updateSongListVisibility() {
+  songList.hidden = !areSongsVisible;
+  songListToggle.textContent = areSongsVisible ? 'Hide Songs' : 'Show All Songs';
+  songListToggle.setAttribute('aria-expanded', String(areSongsVisible));
+  emptySearch.hidden = !areSongsVisible || songList.children.length > 0;
 }
 
 /* Side Menu */
@@ -658,6 +666,11 @@ if (openBookButton) {
   });
 }
 searchInput.addEventListener('input', renderContents);
+songListToggle.addEventListener('click', () => {
+  areSongsVisible = !areSongsVisible;
+  localStorage.setItem(songListVisibilityKey, String(areSongsVisible));
+  updateSongListVisibility();
+});
 genreFilter.addEventListener('change', () => {
   localStorage.setItem('lyrics-book-genre', genreFilter.value);
   renderContents();
