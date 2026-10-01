@@ -38,8 +38,6 @@ const songMenuButton = document.querySelector('#song-menu-button');
 const songMenuPanel = document.querySelector('#song-menu-panel');
 const songMenuOverlay = document.querySelector('#song-menu-overlay');
 const songMenuClose = document.querySelector('#song-menu-close');
-const songToolsToggle = document.querySelector('#song-tools-toggle');
-const songToolsPanel = document.querySelector('#song-tools-panel');
 
 /* Load in and populate config values */
 document.title = window.APP_NAME || 'Puke Mele';
@@ -657,13 +655,6 @@ if (mainTitle) {
 if (openBookButton) {
   openBookButton.addEventListener('click', () => {
     navigateToAppView('home');
-  });
-}
-if (songToolsToggle && songToolsPanel) {
-  songToolsToggle.addEventListener('click', () => {
-    const isOpen = songToolsPanel.classList.toggle('is-open');
-    songToolsToggle.setAttribute('aria-expanded', String(isOpen));
-    songToolsToggle.classList.toggle('is-active', isOpen);
   });
 }
 searchInput.addEventListener('input', renderContents);
