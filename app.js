@@ -1,6 +1,7 @@
 /* DOM Selectors */
 const openBookButton = document.querySelector('#open-book');
 const mainTitle = document.querySelector('#main-title');
+const bookLayout = document.querySelector('.book-layout');
 const songList = document.querySelector('#song-list');
 const lyricsContent = document.querySelector('#lyrics-content');
 const searchInput = document.querySelector('#song-search');
@@ -66,6 +67,7 @@ let songEmbed = null;
 const savedGenre = localStorage.getItem('lyrics-book-genre') || 'all';
 const savedSort = localStorage.getItem('lyrics-book-sort') || 'az';
 const contentsScrollKey = 'lyrics-book-contents-scroll';
+const appHistoryKey = 'puke-mele';
 
 /* LocalStorage to support save page state */
 if (localStorage.getItem('lyrics-book-opened') === 'true') {
@@ -119,8 +121,9 @@ async function loadSongs() {
     if (!songs.length) showMessage('No songs yet. Add a song object to songs.json.');
 
     const savedSongIndex = localStorage.getItem('lyrics-book-current-song');
-    if (savedSongIndex !== null && parseInt(savedSongIndex) < songs.length) {
-      showSong(parseInt(savedSongIndex));
+    const parsedSongIndex = Number.parseInt(savedSongIndex, 10);
+    if (savedSongIndex !== null && parsedSongIndex >= 0 && parsedSongIndex < songs.length) {
+      navigateToAppView('song', parsedSongIndex);
     }
   } catch (error) {
     showMessage('Songs could not be loaded. Open this folder through a local web server if your browser blocks local JSON files.', true);
@@ -192,7 +195,7 @@ function renderContents() {
     button.setAttribute('aria-current', index === selectedIndex ? 'true' : 'false');
     button.addEventListener('click', () => {
       saveContentsScroll();
-      showSong(index);
+      navigateToAppView('song', index);
     });
 
     const bookmarked = isBookmarked(song);
@@ -287,16 +290,67 @@ function openRandomSong() {
   if (!matches.length) return;
   const randomMatch = matches[Math.floor(Math.random() * matches.length)];
   saveContentsScroll();
-  showSong(randomMatch.index);
+  navigateToAppView('song', randomMatch.index);
 }
 
 function saveContentsScroll() {
-  localStorage.setItem(contentsScrollKey, String(songList.scrollTop));
+  const scrollTop = bookLayout.scrollTop;
+  localStorage.setItem(contentsScrollKey, String(scrollTop));
+  if (history.state?.app === appHistoryKey && history.state.view === 'home') {
+    history.replaceState({ ...history.state, scrollTop }, '', location.href);
+  }
 }
 
-function restoreContentsScroll() {
-  const savedScroll = localStorage.getItem(contentsScrollKey);
-  if (savedScroll !== null) songList.scrollTop = parseInt(savedScroll, 10) || 0;
+function restoreContentsScroll(scrollTop) {
+  const savedScroll = scrollTop ?? Number.parseInt(localStorage.getItem(contentsScrollKey) || '0', 10);
+  requestAnimationFrame(() => {
+    bookLayout.scrollTop = Number.isFinite(savedScroll) ? savedScroll : 0;
+  });
+}
+
+function navigateToAppView(view, songIndex) {
+  const currentState = history.state;
+  if (currentState?.app === appHistoryKey
+    && currentState.view === view
+    && (view !== 'song' || currentState.songIndex === songIndex)) return;
+
+  if (currentState?.app === appHistoryKey && currentState.view === 'home') saveContentsScroll();
+  const nextState = { app: appHistoryKey, view };
+  if (view === 'song') nextState.songIndex = songIndex;
+  if (view === 'home') nextState.scrollTop = 0;
+  history.pushState(nextState, '', location.href);
+  renderAppView(nextState);
+}
+
+function renderAppView(state) {
+  if (state.view === 'landing') {
+    songAudio.pause();
+    songAudio.currentTime = 0;
+    document.body.classList.remove('home-mode', 'reading-mode');
+    document.body.classList.add('landing-mode');
+    localStorage.removeItem('lyrics-book-opened');
+    localStorage.removeItem('lyrics-book-current-song');
+    return;
+  }
+
+  if (state.view === 'home') {
+    songAudio.pause();
+    songAudio.currentTime = 0;
+    document.body.classList.remove('landing-mode', 'reading-mode');
+    document.body.classList.add('home-mode');
+    localStorage.setItem('lyrics-book-opened', 'true');
+    localStorage.removeItem('lyrics-book-current-song');
+    restoreContentsScroll(state.scrollTop);
+    return;
+  }
+
+  if (state.view === 'song' && songs[state.songIndex]) showSong(state.songIndex);
+}
+
+function initializeAppHistory() {
+  const existingState = history.state && typeof history.state === 'object' ? history.state : {};
+  const view = document.body.classList.contains('home-mode') ? 'home' : 'landing';
+  history.replaceState({ ...existingState, app: appHistoryKey, view, scrollTop: 0 }, '', location.href);
 }
 
 function showSong(index) {
@@ -512,13 +566,11 @@ function renderChordText(lyrics) {
 }
 
 function showContents() {
-  songAudio.pause();
-  songAudio.currentTime = 0;
-  localStorage.removeItem('lyrics-book-current-song');
-  document.body.classList.remove('reading-mode');
-  document.body.classList.add('home-mode');
-  localStorage.setItem('lyrics-book-opened', 'true');
-  requestAnimationFrame(restoreContentsScroll);
+  if (history.state?.app === appHistoryKey && history.state.view === 'song') {
+    history.back();
+    return;
+  }
+  navigateToAppView('home');
 }
 
 function updateJsonOutput() {
@@ -599,16 +651,12 @@ function showMessage(message, isError = false) {
 /* Event Listeners */
 if (mainTitle) {
   mainTitle.addEventListener('click', () => {
-    document.body.classList.remove('home-mode');
-    document.body.classList.add('landing-mode');
-    localStorage.removeItem('lyrics-book-opened');
+    navigateToAppView('landing');
   })
 }
 if (openBookButton) {
   openBookButton.addEventListener('click', () => {
-    document.body.classList.remove('landing-mode');
-    document.body.classList.add('home-mode');
-    localStorage.setItem('lyrics-book-opened', 'true');
+    navigateToAppView('home');
   });
 }
 if (songToolsToggle && songToolsPanel) {
@@ -682,9 +730,13 @@ document.addEventListener('keydown', (event) => {
   if (converterDialog.open) return;
   if (event.key === 'Escape' && document.body.classList.contains('reading-mode')) showContents();
 });
+window.addEventListener('popstate', (event) => {
+  if (event.state?.app === appHistoryKey) renderAppView(event.state);
+});
 window.addEventListener('resize', () => {
   const lyrics = document.querySelector('.lyrics-text');
   if (lyrics) fitLyrics(lyrics);
 });
 
+initializeAppHistory();
 loadSongs();
