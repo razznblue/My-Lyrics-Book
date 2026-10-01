@@ -933,28 +933,37 @@ body.home-mode .contents-panel {
 
 body.home-mode .panel-heading {
   grid-column: 1 / -1;
+  flex-wrap: wrap;
   align-items: end;
-  margin-bottom: 24px;
   padding-bottom: 20px;
   border-bottom: 1px solid #cbd2c4;
 }
 
 body.home-mode .catalog-actions {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   justify-content: flex-end;
   gap: 10px;
 }
 
 body.home-mode .panel-heading h2 {
+  flex: 0 0 auto;
+  min-width: 0;
   color: #173e35;
   font-size: 3rem;
+  white-space: nowrap;
 }
+
+body.home-mode .catalog-actions { flex: 0 0 auto; }
 
 body.home-mode .song-list-toggle,
 body.home-mode .catalog-actions .random-button {
-  height: auto;
-  padding: 7px 11px;
+  flex: 0 0 132px;
+  width: 132px;
+  height: 34px;
+  min-height: 34px;
+  padding: 0 8px;
   border: 0;
   border-radius: 2px;
   color: #173e35;
@@ -965,6 +974,7 @@ body.home-mode .catalog-actions .random-button {
   letter-spacing: 0;
   line-height: 1;
   text-transform: none;
+  white-space: nowrap;
   filter: none;
   box-shadow: none;
   transform: none;
@@ -1199,11 +1209,20 @@ body.reading-mode .lyrics-text.is-overflowing { max-height: none; overflow: visi
   }
   .home-title { max-width: 9ch; font-size: 3.4rem; }
   body.home-mode .book-layout { padding: 30px 18px 48px; }
-  body.home-mode .panel-heading h2 { font-size: 2.3rem; }
+  body.home-mode .panel-heading h2 { font-size: 2.2rem; }
   body.home-mode .contents-controls { gap: 10px; }
 }
 
+@media (max-width: 520px) {
+  body.home-mode .panel-heading { gap: 8px; }
+  body.home-mode .catalog-actions { gap: 8px; }
+  body.home-mode .song-list-toggle,
+  body.home-mode .catalog-actions .random-button { flex-basis: 102px; width: 102px; }
+}
+
 @media (max-width: 420px) {
+  body.home-mode .panel-heading { gap: 5px; }
+  body.home-mode .catalog-actions { gap: 5px; }
   body.home-mode .contents-controls { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
   body.home-mode .collection-filter-options { width: 100%; }
   body.home-mode .collection-filter-button { flex: 1 1 0; min-width: 0; padding: 5px 3px; }
