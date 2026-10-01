@@ -44,6 +44,8 @@ const songToolsPanel = document.querySelector('#song-tools-panel');
 document.title = window.APP_NAME || 'Puke Mele';
 const appNameEl = document.querySelector('#app-name');
 if (appNameEl) appNameEl.textContent = window.APP_NAME || 'Puke Mele';
+const pageTitleEl = document.querySelector('#page-title');
+if (pageTitleEl) pageTitleEl.textContent = window.APP_NAME || 'Puke Mele';
 const appTaglineEl = document.querySelector('#app-tagline');
 if (appTaglineEl) appTaglineEl.textContent = window.APP_TAGLINE || '';
 if (window.THEME_ACCENT) {
