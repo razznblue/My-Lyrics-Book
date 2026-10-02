@@ -144,7 +144,8 @@ async function loadSongs() {
     const savedSongIndex = localStorage.getItem('lyrics-book-current-song');
     const parsedSongIndex = Number.parseInt(savedSongIndex, 10);
     if (savedSongIndex !== null && parsedSongIndex >= 0 && parsedSongIndex < songs.length) {
-      navigateToAppView('song', parsedSongIndex);
+      const isRandomSong = localStorage.getItem('lyrics-book-current-song-random') === 'true';
+      navigateToAppView('song', parsedSongIndex, { random: isRandomSong });
     }
   } catch (error) {
     showMessage('Songs could not be loaded. Open this folder through a local web server if your browser blocks local JSON files.', true);
@@ -397,6 +398,7 @@ function renderAppView(state, isPopState = false) {
     document.body.classList.add('landing-mode');
     localStorage.removeItem('lyrics-book-opened');
     localStorage.removeItem('lyrics-book-current-song');
+    localStorage.removeItem('lyrics-book-current-song-random');
     return;
   }
 
@@ -407,6 +409,7 @@ function renderAppView(state, isPopState = false) {
     document.body.classList.add('home-mode');
     localStorage.setItem('lyrics-book-opened', 'true');
     localStorage.removeItem('lyrics-book-current-song');
+    localStorage.removeItem('lyrics-book-current-song-random');
     restoreContentsScroll(state.scrollTop);
     return;
   }
@@ -429,6 +432,7 @@ function showSong(index, isRandomSong = false) {
   updateRandomSongSaveButtons(song);
   selectedIndex = index;
   localStorage.setItem('lyrics-book-current-song', index);
+  localStorage.setItem('lyrics-book-current-song-random', String(isRandomSong));
   document.body.classList.remove('home-mode', 'landing-mode');
   lyricsContent.replaceChildren();
 
@@ -462,6 +466,12 @@ function showSong(index, isRandomSong = false) {
   lyricsContent.append(songAudio);
   if (songEmbed) lyricsContent.append(songEmbed);
 
+  if (isRandomSong && (song.audio || song.embed)) {
+    showAudioCheckbox.checked = true;
+    songAudio.style.display = song.audio ? 'block' : 'none';
+    if (songEmbed) songEmbed.hidden = false;
+  }
+
   const lyrics = document.createElement('p');
   lyrics.className = 'lyrics-text';
   lyrics.textContent = song.lyrics;
@@ -474,7 +484,7 @@ function showSong(index, isRandomSong = false) {
   transposeSteps = 0;
   updateTransposeStatus();
   transposeControls.hidden = true;
-  showChordsCheckbox.checked = false;
+  showChordsCheckbox.checked = isRandomSong && Boolean(song.chords);
   if (song.chords) {
     showChordsCheckbox.disabled = false;
   } else {
@@ -483,7 +493,7 @@ function showSong(index, isRandomSong = false) {
 
   renderContents();
   document.body.classList.add('reading-mode');
-  fitLyrics(lyrics);
+  updateChordVisibility();
 }
 
 function updateRandomSongSaveButtons(song) {
@@ -789,7 +799,7 @@ converterChords.addEventListener('input', updateJsonOutput);
 copyJsonButton.addEventListener('click', copyJson);
 downloadJsonButton.addEventListener('click', downloadJson);
 backButton.addEventListener('click', showContents);
-showChordsCheckbox.addEventListener('change', () => {
+function updateChordVisibility() {
   const lyrics = document.querySelector('.lyrics-text');
   if (!lyrics) return;
   
@@ -807,7 +817,9 @@ showChordsCheckbox.addEventListener('change', () => {
     transposeControls.hidden = true;
   }
   fitLyrics(lyrics);
-});
+}
+
+showChordsCheckbox.addEventListener('change', updateChordVisibility);
 transposeDownButton.addEventListener('click', () => {
   if (transposeSteps <= -12) return;
   transposeSteps -= 1;
