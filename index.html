@@ -33,6 +33,7 @@
             <span class="menu-panel-title">Menu</span>
             <button id="header-menu-close" class="menu-panel-close" type="button" aria-label="Close menu">×</button>
           </div>
+          <button id="home-menu-button" class="converter-button" type="button">Home</button>
           <button id="converter-button" class="converter-button" type="button" aria-label="Convert lyrics to JSON" title="Convert lyrics to JSON">{ }</button>
           <button id="random-song" class="random-button" type="button" aria-label="Open a random song" title="Open a random song" data-tooltip="Random song">Random song</button>
         </div>
@@ -75,7 +76,10 @@
             </select>
           </div>
           <div class="collection-filter" id="collection-filter" role="group" aria-label="Filter by saved status">
-            <span class="search-label">Saved</span>
+            <div class="saved-filter-heading">
+              <span class="search-label">Saved</span>
+              <span id="collection-filter-current" class="collection-filter-current" aria-live="polite">All songs</span>
+            </div>
             <div class="collection-filter-options">
               <button class="collection-filter-button" type="button" data-collection-filter="all" aria-label="Show all songs" title="All songs" aria-pressed="true">All</button>
               <button class="collection-filter-button" type="button" data-collection-filter="liked" aria-label="Show liked songs" title="Liked songs" aria-pressed="false"><span class="collection-filter-text">Liked</span><svg class="collection-filter-icon" viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1.1-1.1a5.5 5.5 0 0 0-7.8 7.8l1.1 1.1L12 21l7.8-7.5 1.1-1.1a5.5 5.5 0 0 0-.1-7.8Z"/></svg></button>
@@ -87,6 +91,9 @@
           <ul id="song-list" class="song-list" hidden></ul>
         </nav>
         <p id="empty-search" class="empty-message" hidden>No songs match your search.</p>
+        <div id="catalog-empty-state" class="catalog-empty-state" aria-hidden="true" hidden>
+          <img src="/icons/icon-512.png" alt="">
+        </div>
       </aside>
 
       <article id="lyrics-panel" class="lyrics-panel" aria-labelledby="song-title">
@@ -100,10 +107,10 @@
               <span class="back-label">BACK</span>
             </div>
             <button id="random-song-toolbar" class="random-button random-button-inline" type="button" hidden>New random song</button>
-            <button id="random-song-like" class="song-save-button like-button" type="button" aria-label="Like this song" title="Like this song" aria-pressed="false" hidden>
+            <button id="song-like" class="song-save-button like-button" type="button" aria-label="Like this song" title="Like this song" aria-pressed="false" hidden>
               <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1.1-1.1a5.5 5.5 0 0 0-7.8 7.8l1.1 1.1L12 21l7.8-7.5 1.1-1.1a5.5 5.5 0 0 0-.1-7.8Z"/></svg>
             </button>
-            <button id="random-song-bookmark" class="song-save-button bookmark-button" type="button" aria-label="Bookmark this song" title="Bookmark this song" aria-pressed="false" hidden>
+            <button id="song-bookmark" class="song-save-button bookmark-button" type="button" aria-label="Bookmark this song" title="Bookmark this song" aria-pressed="false" hidden>
               <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M6 3.5C6 2.67 6.67 2 7.5 2h9c.83 0 1.5.67 1.5 1.5v18l-6-4.2-6 4.2v-18z"/></svg>
             </button>
 

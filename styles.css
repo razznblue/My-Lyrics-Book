@@ -271,6 +271,8 @@ h2 { margin-bottom: 0; font-size: 1.25rem; font-weight: normal; }
 
 .song-save-button[hidden] { display: none; }
 
+.collection-filter-current { display: none; }
+
 .empty-message, .loading-message, .error-message { color: var(--muted); line-height: 1.5; }
 
 .empty-message { margin: 20px 0 0; font-size: .95rem; }
@@ -1063,6 +1065,25 @@ body.home-mode .song-list {
 
 body.home-mode .song-list[hidden] { display: none; }
 
+body.home-mode .catalog-empty-state {
+  display: flex;
+  grid-column: 1 / -1;
+  align-items: center;
+  justify-content: center;
+  min-height: clamp(240px, 45vh, 520px);
+  overflow: hidden;
+}
+
+body.home-mode .catalog-empty-state[hidden] { display: none; }
+
+body.home-mode .catalog-empty-state img {
+  display: block;
+  width: min(42vw, 320px);
+  max-height: 38vh;
+  object-fit: contain;
+  opacity: .92;
+}
+
 body.home-mode .song-list li {
   min-width: 0;
   border-top: 0;
@@ -1225,6 +1246,15 @@ body.reading-mode .lyrics-text.is-overflowing { max-height: none; overflow: visi
   body.home-mode .catalog-actions { gap: 5px; }
   body.home-mode .contents-controls { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
   body.home-mode .collection-filter-options { width: 100%; }
+  body.home-mode .saved-filter-heading { display: flex; align-items: baseline; justify-content: space-between; gap: 4px; }
+  body.home-mode .collection-filter-current {
+    display: block;
+    color: #173e35;
+    font-family: 'Trebuchet MS', sans-serif;
+    font-size: .65rem;
+    font-weight: bold;
+    white-space: nowrap;
+  }
   body.home-mode .collection-filter-button { flex: 1 1 0; min-width: 0; padding: 5px 3px; }
   body.home-mode .collection-filter-text { display: none; }
   body.home-mode .collection-filter-icon { display: inline-block; }

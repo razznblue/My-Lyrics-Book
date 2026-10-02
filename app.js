@@ -7,13 +7,16 @@ const lyricsContent = document.querySelector('#lyrics-content');
 const searchInput = document.querySelector('#song-search');
 const genreFilter = document.querySelector('#genre-filter');
 const emptySearch = document.querySelector('#empty-search');
+const catalogEmptyState = document.querySelector('#catalog-empty-state');
 const songListToggle = document.querySelector('#song-list-toggle');
 const collectionFilter = document.querySelector('#collection-filter');
+const collectionFilterCurrent = document.querySelector('#collection-filter-current');
 const randomSongButton = document.querySelector('#random-song');
 const randomSongListButton = document.querySelector('#random-song-list');
 const randomSongToolbarButton = document.querySelector('#random-song-toolbar');
-const randomSongLikeButton = document.querySelector('#random-song-like');
-const randomSongBookmarkButton = document.querySelector('#random-song-bookmark');
+const songLikeButton = document.querySelector('#song-like');
+const songBookmarkButton = document.querySelector('#song-bookmark');
+const homeMenuButton = document.querySelector('#home-menu-button');
 const backButton = document.querySelector('#back-button');
 const converterButton = document.querySelector('#converter-button');
 const converterDialog = document.querySelector('#converter-dialog');
@@ -255,12 +258,15 @@ function renderContents() {
 
 function updateSongListVisibility() {
   songList.hidden = !areSongsVisible;
+  catalogEmptyState.hidden = areSongsVisible;
   songListToggle.textContent = areSongsVisible ? 'Hide Songs' : 'Show All Songs';
   songListToggle.setAttribute('aria-expanded', String(areSongsVisible));
   emptySearch.hidden = !areSongsVisible || songList.children.length > 0;
 }
 
 function updateCollectionFilterButtons() {
+  const labels = { all: 'All songs', liked: 'Liked', bookmarked: 'Bookmarked' };
+  collectionFilterCurrent.textContent = labels[activeCollectionFilter];
   collectionFilter.querySelectorAll('[data-collection-filter]').forEach(button => {
     button.setAttribute('aria-pressed', String(button.dataset.collectionFilter === activeCollectionFilter));
   });
@@ -427,9 +433,9 @@ function showSong(index, isRandomSong = false) {
   const song = songs[index];
   if (!song) return;
   randomSongToolbarButton.hidden = !isRandomSong;
-  randomSongLikeButton.hidden = !isRandomSong;
-  randomSongBookmarkButton.hidden = !isRandomSong;
-  updateRandomSongSaveButtons(song);
+  songLikeButton.hidden = false;
+  songBookmarkButton.hidden = false;
+  updateSongSaveButtons(song);
   selectedIndex = index;
   localStorage.setItem('lyrics-book-current-song', index);
   localStorage.setItem('lyrics-book-current-song-random', String(isRandomSong));
@@ -496,17 +502,17 @@ function showSong(index, isRandomSong = false) {
   updateChordVisibility();
 }
 
-function updateRandomSongSaveButtons(song) {
+function updateSongSaveButtons(song) {
   const liked = isLiked(song);
   const bookmarked = isBookmarked(song);
-  randomSongLikeButton.classList.toggle('is-liked', liked);
-  randomSongLikeButton.setAttribute('aria-pressed', String(liked));
-  randomSongLikeButton.setAttribute('aria-label', liked ? `Unlike ${song.title}` : `Like ${song.title}`);
-  randomSongLikeButton.title = liked ? 'Unlike this song' : 'Like this song';
-  randomSongBookmarkButton.classList.toggle('is-bookmarked', bookmarked);
-  randomSongBookmarkButton.setAttribute('aria-pressed', String(bookmarked));
-  randomSongBookmarkButton.setAttribute('aria-label', bookmarked ? `Remove ${song.title} from bookmarks` : `Bookmark ${song.title}`);
-  randomSongBookmarkButton.title = bookmarked ? 'Remove bookmark' : 'Bookmark this song';
+  songLikeButton.classList.toggle('is-liked', liked);
+  songLikeButton.setAttribute('aria-pressed', String(liked));
+  songLikeButton.setAttribute('aria-label', liked ? `Unlike ${song.title}` : `Like ${song.title}`);
+  songLikeButton.title = liked ? 'Unlike this song' : 'Like this song';
+  songBookmarkButton.classList.toggle('is-bookmarked', bookmarked);
+  songBookmarkButton.setAttribute('aria-pressed', String(bookmarked));
+  songBookmarkButton.setAttribute('aria-label', bookmarked ? `Remove ${song.title} from bookmarks` : `Bookmark ${song.title}`);
+  songBookmarkButton.title = bookmarked ? 'Remove bookmark' : 'Bookmark this song';
 }
 
 const flatNotes = ['C', 'Db', 'D', 'Eb', 'E', 'F', 'Gb', 'G', 'Ab', 'A', 'Bb', 'B'];
@@ -754,6 +760,10 @@ if (openBookButton) {
     navigateToAppView('home');
   });
 }
+homeMenuButton.addEventListener('click', () => {
+  navigateToAppView('landing');
+  headerSideMenu?.close();
+});
 searchInput.addEventListener('input', renderContents);
 songListToggle.addEventListener('click', () => {
   areSongsVisible = !areSongsVisible;
@@ -775,18 +785,18 @@ genreFilter.addEventListener('change', () => {
 if (randomSongButton) if (randomSongButton) randomSongButton.addEventListener('click', openRandomSong);
 if (randomSongListButton) randomSongListButton.addEventListener('click', openRandomSong);
 if (randomSongToolbarButton) randomSongToolbarButton.addEventListener('click', () => openRandomSong({ cycle: true }));
-randomSongLikeButton.addEventListener('click', () => {
+songLikeButton.addEventListener('click', () => {
   const song = songs[selectedIndex];
   if (!song) return;
   toggleLike(song);
-  updateRandomSongSaveButtons(song);
+  updateSongSaveButtons(song);
   renderContents();
 });
-randomSongBookmarkButton.addEventListener('click', () => {
+songBookmarkButton.addEventListener('click', () => {
   const song = songs[selectedIndex];
   if (!song) return;
   toggleBookmark(song);
-  updateRandomSongSaveButtons(song);
+  updateSongSaveButtons(song);
   renderContents();
 });
 if (converterButton) converterButton.addEventListener('click', openConverter);
